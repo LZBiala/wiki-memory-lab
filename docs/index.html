@@ -409,7 +409,7 @@ function render() {
   termOut.innerHTML = html;
   termOut.scrollTop = termOut.scrollHeight;
   if (pos === 0) {
-    explainBox.innerHTML = `<div class="step-name">READY</div><h3>Press Next to replay the story</h3><p>Twelve beats from the committed transcripts — recall, extend, the prune, the honest miss, and the bill.</p>`;
+    explainBox.innerHTML = `<div class="step-name">READY</div><h3>Press Next to replay the story</h3><p>Thirteen beats from the committed transcripts — recall, extend, the prune, the honest miss, and the bill.</p>`;
   } else {
     const b = BEATS[pos - 1];
     explainBox.innerHTML = `<div class="step-name">${b.name}</div><h3>${b.h}</h3><p>${b.e}</p>`;

@@ -128,8 +128,8 @@ Regenerate everything yourself: `python -m wikimemlab demo --quiet && git diff`.
   selective recall scales with the task's working set.
 - **Fewer tokens is also the latency lever** — *mechanism, not a measurement*: this
   repo measures tokens, not wall-clock, but shorter prompts are the one input-side
-  change that reduces both cost and time-to-first-token on every provider. If you need
-  latency numbers, they belong to your stack, measured there.
+  change that reduces both cost and time-to-first-token on any metered provider. If
+  you need latency numbers, they belong to your stack, measured there.
 - **Sub-agent fan-out multiplies the bill** — *arithmetic, not a benchmark*: an
   orchestrator that spawns N sub-agents pays the memory-loading cost N times. Whatever
   a memory policy saves per agent, fan-out multiplies. This harness measures the
@@ -137,8 +137,8 @@ Regenerate everything yourself: `python -m wikimemlab demo --quiet && git diff`.
 - **Auditable memory is debuggable memory.** When an agent misbehaves, the first
   question is "what did it believe, and why?" Here that's an `ls` and a grep: every
   RECALL/CREATE/EXTEND/PRUNE/ARCHIVE is one ops-log line with a written reason, and
-  deleted knowledge sits in an archive with its cause of death. That is an incident
-  review that takes minutes, not a forensic dig.
+  deleted knowledge sits in an archive with its cause of death. That is minutes of
+  reading, not a forensic dig through opaque state.
 - **Reviewable by anyone, with no tooling.** The memory is markdown. A teammate, an
   auditor, or a hiring manager can open the folder and read what the agent knows —
   which is also why this page can show you real transcripts instead of screenshots.

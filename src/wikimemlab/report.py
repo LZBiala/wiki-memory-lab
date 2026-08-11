@@ -158,6 +158,8 @@ def render_cumulative_svg(rows: list[Row], corpus: str = "milldale") -> str:
     stuff = _cumulative(_series(rows, corpus, "stuff"))
     if not sel or not stuff:
         return ""
+    if [s for s, _ in sel] != [s for s, _ in stuff]:
+        raise ValueError("cumulative chart requires matching session sets")
     sessions = [s for s, _ in sel]
     y_max_raw = max(stuff[-1][1], sel[-1][1])
     y_max = ((y_max_raw // 500) + 1) * 500

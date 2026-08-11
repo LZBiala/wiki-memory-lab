@@ -224,3 +224,7 @@ class TestCoverageInProcess:
         # The temp regeneration must be byte-identical to the committed goldens.
         committed = (REPO / "metrics.jsonl").read_bytes()
         assert (tmp_path / "metrics.jsonl").read_bytes() == committed
+        for svg in ("hero.svg", "cumulative.svg"):
+            assert (tmp_path / "report" / svg).read_bytes() == (
+                REPO / "report" / svg
+            ).read_bytes()
