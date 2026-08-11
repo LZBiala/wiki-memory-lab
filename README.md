@@ -12,6 +12,11 @@ in plain text files.
 > --exit-code`, on Windows and Linux.) The bundled agent is scripted: it
 > measures the harness, never model capability — see *What this does NOT show*.
 
+**🎛 Interactive walkthrough:** [lzbiala.github.io/wiki-memory-lab/docs](https://lzbiala.github.io/wiki-memory-lab/docs/) —
+step through a real session (including the prune moment) in your browser, or open
+[`docs/index.html`](docs/index.html) straight from a clone. Static file, no build
+system, no external requests.
+
 ## The idea in 30 seconds
 
 Most AI assistants either forget everything between chats or reread their
