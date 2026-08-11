@@ -1,0 +1,118 @@
+{
+  "corpus": "milldale-mini",
+  "description": "The crossover corpus: a small wiki (~8 short notes) where the tasks touch most of the corpus, so index overhead plus recalled notes is measured against simply loading everything. This is the honest arm of the token claim — at this size, stuffing is expected to be cheaper, and the README publishes whichever way the measurement lands.",
+  "sessions": [
+    {
+      "session": 1,
+      "tasks": [
+        {
+          "id": "m1t1",
+          "prompt": "I am new in town — what is on and around the square?",
+          "relevant": [],
+          "answer": "The candle shop is on the square, the orchard stand sells apples and cider on weekends, the cider press barn runs demos, and there is a lantern walk this weekend.",
+          "learnings": [
+            {
+              "title": "candle-shop",
+              "hook": "The candle shop on the square: hours and stock",
+              "body": "Open 10am to 6pm daily on the square.",
+              "intended": "CREATE",
+              "reason": "walked past on the square"
+            },
+            {
+              "title": "orchard-stand",
+              "hook": "The orchard stand: apples and cider each weekend",
+              "body": "Apples and cider, weekends only.",
+              "intended": "CREATE",
+              "reason": "stand seen at the square edge"
+            },
+            {
+              "title": "cider-press",
+              "hook": "The cider press barn: weekend pressing demos",
+              "body": "Pressing demos Saturday mornings.",
+              "intended": "CREATE",
+              "reason": "flyer at the orchard stand"
+            },
+            {
+              "title": "lantern-walk",
+              "hook": "The lantern walk: an evening trail event this weekend",
+              "body": "Evening trail walk, this weekend.",
+              "intended": "CREATE",
+              "reason": "poster on the square"
+            }
+          ]
+        },
+        {
+          "id": "m1t2",
+          "prompt": "What is there to do by the pond and the footbridge?",
+          "relevant": [],
+          "answer": "The pond is open for skating dawn to dusk in winter with rentals at the hut; the footbridge is closed for repair; choir practice is Thursday nights at the hall.",
+          "learnings": [
+            {
+              "title": "choir-practice",
+              "hook": "Choir practice night at the hall",
+              "body": "Thursday nights at the hall.",
+              "intended": "CREATE",
+              "reason": "notice at the hall door"
+            },
+            {
+              "title": "skate-rental",
+              "hook": "Skate rental at the pond hut in winter",
+              "body": "Rentals at the pond hut.",
+              "intended": "CREATE",
+              "reason": "hut sign by the pond"
+            },
+            {
+              "title": "pond-hours",
+              "hook": "When the skating pond is open",
+              "body": "Dawn to dusk in winter.",
+              "intended": "CREATE",
+              "reason": "board at the pond gate"
+            },
+            {
+              "title": "bridge-repair",
+              "hook": "The footbridge closure notice: closed for repair",
+              "body": "Footbridge closed for repair.",
+              "intended": "CREATE",
+              "reason": "notice on the footbridge"
+            }
+          ]
+        }
+      ],
+      "corrections": []
+    },
+    {
+      "session": 2,
+      "tasks": [
+        {
+          "id": "m2t1",
+          "prompt": "Is the orchard stand selling cider this weekend?",
+          "relevant": ["orchard-stand", "cider-press"],
+          "answer": "Yes — the stand runs weekends, and the press barn demos are Saturday mornings.",
+          "learnings": []
+        },
+        {
+          "id": "m2t2",
+          "prompt": "Where is skate rental at the pond and when is the pond open?",
+          "relevant": ["skate-rental", "pond-hours"],
+          "answer": "Rentals are at the pond hut; the pond is open dawn to dusk in winter.",
+          "learnings": []
+        },
+        {
+          "id": "m2t3",
+          "prompt": "Is the footbridge still closed for repair?",
+          "relevant": ["bridge-repair"],
+          "answer": "Yes — the closure notice is still posted.",
+          "learnings": []
+        },
+        {
+          "id": "m2t4",
+          "prompt": "What are the candle shop hours on the square?",
+          "relevant": ["candle-shop"],
+          "answer": "Open 10am to 6pm daily.",
+          "learnings": []
+        }
+      ],
+      "corrections": []
+    }
+  ]
+}

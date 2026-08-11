@@ -1,0 +1,59 @@
+{"note": "bakery-hours", "op": "CREATE", "reason": "first visit to the bakery", "session": 1}
+{"note": "town-map", "op": "CREATE", "reason": "walked the route and mapped it", "session": 1}
+{"note": "school-play", "op": "CREATE", "reason": "poster seen on the school gate", "session": 1}
+{"note": "bakery-hours", "op": "RECALL", "reason": "needed for task s2t1", "session": 2}
+{"note": "library-card", "op": "CREATE", "reason": "asked at the library counter", "session": 2}
+{"note": "bus-schedule", "op": "CREATE", "reason": "timetable read at the stop", "session": 2}
+{"note": "farmers-market", "op": "CREATE", "reason": "poster seen at the bus stop", "session": 2}
+{"note": "farmers-market", "op": "RECALL", "reason": "needed for task s3t1", "session": 3}
+{"note": "bus-schedule", "op": "RECALL", "reason": "needed for task s3t1", "session": 3}
+{"note": "pharmacy-hours", "op": "CREATE", "reason": "sign read on the door", "session": 3}
+{"note": "bike-repair", "op": "CREATE", "reason": "asked in the shop", "session": 3}
+{"note": "riverside-park", "op": "CREATE", "reason": "visited after the errand", "session": 3}
+{"note": "pharmacy-hours", "op": "RECALL", "reason": "needed for task s4t1", "session": 4}
+{"note": "bus-schedule", "op": "RECALL", "reason": "needed for task s4t2", "session": 4}
+{"note": "town-map", "op": "RECALL", "reason": "needed for task s4t2", "session": 4}
+{"note": "town-history", "op": "CREATE", "reason": "leaflet picked up at the bus stop; hook written lazily on purpose", "session": 4}
+{"note": "bakery-hours", "op": "EXTEND", "reason": "weekend hours posted in the bakery window", "session": 4}
+{"note": "bakery-hours", "op": "RECALL", "reason": "needed for task s5t1", "session": 5}
+{"note": "farmers-market", "op": "RECALL", "reason": "needed for task s5t2", "session": 5}
+{"note": "riverside-park", "op": "RECALL", "reason": "needed for task s5t3", "session": 5}
+{"note": "riverside-parking", "op": "CREATE", "reason": "found the lot on the picnic trip; distinct concept from the park itself", "session": 5}
+{"note": "clinic-hours", "op": "CREATE", "reason": "sign read while passing the clinic", "session": 5}
+{"note": "library-card", "op": "RECALL", "reason": "needed for task s6t1", "session": 6}
+{"note": "riverside-park", "op": "RECALL", "reason": "needed for task s6t2", "session": 6}
+{"note": "bus-schedule", "op": "RECALL", "reason": "needed for task s6t2", "session": 6}
+{"note": "riverside-parking", "op": "RECALL", "reason": "needed for task s6t2", "session": 6}
+{"note": "bus-schedule", "op": "RECALL", "reason": "needed for task s6t3", "session": 6}
+{"note": "walk-in-clinic-hours", "op": "CREATE", "reason": "same clinic as the existing note \u2014 a paraphrased title the exact matcher will miss, counted as false-CREATE", "session": 6}
+{"note": "bus-schedule", "op": "PRUNE", "reason": "contradicted by session 6 town notice: route 4 discontinued", "session": 6}
+{"note": "bus-route-7", "op": "CREATE", "reason": "replacement for pruned bus-schedule", "session": 6}
+{"note": "school-play", "op": "ARCHIVE", "reason": "decay rule: not created or recalled since session 1 (window 5)", "session": 6}
+{"note": "pharmacy-hours", "op": "RECALL", "reason": "needed for task s7t2", "session": 7}
+{"note": "harvest-festival", "op": "CREATE", "reason": "banner read on the square", "session": 7}
+{"note": "mayor-office", "op": "CREATE", "reason": "asked at the town hall", "session": 7}
+{"note": "pharmacy-hours", "op": "PRUNE", "reason": "new owner posted new hours in session 7; the old note is wrong", "session": 7}
+{"note": "pharmacy-hours", "op": "CREATE", "reason": "replacement for pruned pharmacy-hours", "session": 7}
+{"note": "bakery-hours", "op": "RECALL", "reason": "needed for task s8t1", "session": 8}
+{"note": "hardware-store", "op": "CREATE", "reason": "first visit to the hardware store", "session": 8}
+{"note": "bus-route-7", "op": "RECALL", "reason": "needed for task s8t2", "session": 8}
+{"note": "harvest-festival", "op": "RECALL", "reason": "needed for task s8t2", "session": 8}
+{"note": "bike-repair", "op": "RECALL", "reason": "needed for task s8t3", "session": 8}
+{"note": "clinic-hours", "op": "RECALL", "reason": "needed for task s8t3", "session": 8}
+{"note": "walk-in-clinic-hours", "op": "RECALL", "reason": "needed for task s8t3", "session": 8}
+{"note": "candle-shop", "op": "CREATE", "reason": "walked past on the square", "session": 1}
+{"note": "orchard-stand", "op": "CREATE", "reason": "stand seen at the square edge", "session": 1}
+{"note": "cider-press", "op": "CREATE", "reason": "flyer at the orchard stand", "session": 1}
+{"note": "lantern-walk", "op": "CREATE", "reason": "poster on the square", "session": 1}
+{"note": "choir-practice", "op": "CREATE", "reason": "notice at the hall door", "session": 1}
+{"note": "skate-rental", "op": "CREATE", "reason": "hut sign by the pond", "session": 1}
+{"note": "pond-hours", "op": "CREATE", "reason": "board at the pond gate", "session": 1}
+{"note": "bridge-repair", "op": "CREATE", "reason": "notice on the footbridge", "session": 1}
+{"note": "orchard-stand", "op": "RECALL", "reason": "needed for task m2t1", "session": 2}
+{"note": "cider-press", "op": "RECALL", "reason": "needed for task m2t1", "session": 2}
+{"note": "lantern-walk", "op": "RECALL", "reason": "needed for task m2t1", "session": 2}
+{"note": "skate-rental", "op": "RECALL", "reason": "needed for task m2t2", "session": 2}
+{"note": "pond-hours", "op": "RECALL", "reason": "needed for task m2t2", "session": 2}
+{"note": "bridge-repair", "op": "RECALL", "reason": "needed for task m2t3", "session": 2}
+{"note": "candle-shop", "op": "RECALL", "reason": "needed for task m2t4", "session": 2}
+{"note": "pond-hours", "op": "RECALL", "reason": "needed for task m2t4", "session": 2}

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wikimemlab"
+version = "1.0.0"
+description = "Long-term memory for AI agents as a human-readable markdown wiki: index-first selective recall, extend-before-create, prune-with-a-reason, single-rule decay. Every published number regenerates in CI with zero API keys."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "LZ Biala" }]
+# Runtime is stdlib-only by design: an empty dependency list is a feature,
+# and the quickstart claim ("pip install pulls nothing") depends on it.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

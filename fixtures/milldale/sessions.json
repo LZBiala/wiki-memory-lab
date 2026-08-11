@@ -1,0 +1,342 @@
+{
+  "corpus": "milldale",
+  "description": "Eight sessions of errands in the fictional town of Milldale. The arcs: recurring facts reward recall; two later corrections force prune-then-recreate; a weekend-hours fact routes to EXTEND; a paraphrased duplicate exposes an honest false-CREATE; two distinct riverside concepts share vocabulary and must not merge; one note carries a deliberately lazy hook that causes a shown retrieval miss; one one-off note decays. 'relevant' lists ground-truth notes for precision/recall and refers only to notes existing before the task runs. 'intended' is the ground-truth routing for the write-back confusion table.",
+  "sessions": [
+    {
+      "session": 1,
+      "tasks": [
+        {
+          "id": "s1t1",
+          "prompt": "What time does the bakery in Milldale open tomorrow?",
+          "relevant": [],
+          "answer": "The bakery at 21 Main Street opens at 7am on weekdays and closes at 3pm.",
+          "learnings": [
+            {
+              "title": "bakery-hours",
+              "hook": "Opening hours for the Milldale bakery on Main Street",
+              "body": "Opens 7am weekdays at 21 Main Street.\nCloses 3pm.",
+              "intended": "CREATE",
+              "reason": "first visit to the bakery"
+            }
+          ]
+        },
+        {
+          "id": "s1t2",
+          "prompt": "How do I walk from the square to the school?",
+          "relevant": [],
+          "answer": "Take Main Street north two blocks from the square, then Oak Lane east to the school gate.",
+          "learnings": [
+            {
+              "title": "town-map",
+              "hook": "Layout of Milldale: which streets cross and where the square sits",
+              "body": "Main Street runs north from the square.\nOak Lane crosses east at the second block.\nThe bakery sits on Main Street — see [[bakery-hours]].",
+              "intended": "CREATE",
+              "reason": "walked the route and mapped it"
+            },
+            {
+              "title": "school-play",
+              "hook": "One-off: the school play happening this week",
+              "body": "The school play runs this week only, in the gym, evenings.",
+              "intended": "CREATE",
+              "reason": "poster seen on the school gate"
+            }
+          ]
+        }
+      ],
+      "corrections": []
+    },
+    {
+      "session": 2,
+      "tasks": [
+        {
+          "id": "s2t1",
+          "prompt": "When does the bakery open on Tuesday?",
+          "relevant": ["bakery-hours"],
+          "answer": "Weekday opening is 7am, so Tuesday it opens at 7am.",
+          "learnings": []
+        },
+        {
+          "id": "s2t2",
+          "prompt": "Which bus goes to the library and how do I get a library card?",
+          "relevant": [],
+          "answer": "Route 4 stops by the library; bring one piece of mail to the counter to get a card. The Saturday market poster was up at the stop.",
+          "learnings": [
+            {
+              "title": "library-card",
+              "hook": "How to get and renew a Milldale library card",
+              "body": "Bring one piece of mail to the counter.\nRenew every two years, free.",
+              "intended": "CREATE",
+              "reason": "asked at the library counter"
+            },
+            {
+              "title": "bus-schedule",
+              "hook": "Bus route 4 times through Milldale",
+              "body": "Route 4 hourly from the square, 7am to 8pm.\nStops at the library and Elm Street.",
+              "intended": "CREATE",
+              "reason": "timetable read at the stop"
+            },
+            {
+              "title": "farmers-market",
+              "hook": "The Saturday farmers market on the town square",
+              "body": "Saturdays 8am to noon on the square.\nProduce, bread, and cider stalls.",
+              "intended": "CREATE",
+              "reason": "poster seen at the bus stop"
+            }
+          ]
+        }
+      ],
+      "corrections": []
+    },
+    {
+      "session": 3,
+      "tasks": [
+        {
+          "id": "s3t1",
+          "prompt": "What bus can I take to the farmers market on Saturday?",
+          "relevant": ["bus-schedule", "farmers-market"],
+          "answer": "Route 4 runs hourly from the square; the market is on the square Saturdays 8am to noon, so any morning route 4 works.",
+          "learnings": []
+        },
+        {
+          "id": "s3t2",
+          "prompt": "Where can I get my bike fixed and is there a pharmacy nearby?",
+          "relevant": [],
+          "answer": "The bike shop on Forge Alley does repairs with a two-day turnaround; the pharmacy is on Elm Street, open 9am to 6pm. The riverside park was worth the detour after.",
+          "learnings": [
+            {
+              "title": "pharmacy-hours",
+              "hook": "Hours for the pharmacy on Elm Street",
+              "body": "Open 9am to 6pm weekdays on Elm Street.\nClosed Sundays.",
+              "intended": "CREATE",
+              "reason": "sign read on the door"
+            },
+            {
+              "title": "bike-repair",
+              "hook": "The bike shop on Forge Alley: services and turnaround",
+              "body": "Repairs with a two-day turnaround on Forge Alley.\nTubes and brake work done same day.",
+              "intended": "CREATE",
+              "reason": "asked in the shop"
+            },
+            {
+              "title": "riverside-park",
+              "hook": "The riverside park: picnic tables and walking trails",
+              "body": "Picnic tables by the water and two walking trails.\nQuietest before noon.",
+              "intended": "CREATE",
+              "reason": "visited after the errand"
+            }
+          ]
+        }
+      ],
+      "corrections": []
+    },
+    {
+      "session": 4,
+      "tasks": [
+        {
+          "id": "s4t1",
+          "prompt": "Is the pharmacy on Elm Street open this evening?",
+          "relevant": ["pharmacy-hours"],
+          "answer": "The note says 9am to 6pm weekdays, so it is closed this evening after 6pm.",
+          "learnings": []
+        },
+        {
+          "id": "s4t2",
+          "prompt": "What time is the last route 4 bus and which streets does it cross?",
+          "relevant": ["bus-schedule", "town-map"],
+          "answer": "Route 4 runs until 8pm from the square, along Main Street past Elm. An old-town leaflet was in the rack at the stop; the bakery window also had weekend hours posted.",
+          "learnings": [
+            {
+              "title": "town-history",
+              "hook": "assorted notes",
+              "body": "The old mill by the river was founded in 1851 by the Harlan family.\nThe town charter dates to 1863.",
+              "intended": "CREATE",
+              "reason": "leaflet picked up at the bus stop; hook written lazily on purpose"
+            },
+            {
+              "title": "bakery-hours",
+              "hook": "unused on extend",
+              "body": "Saturday: 8am to 1pm. Closed Sunday.",
+              "intended": "EXTEND",
+              "reason": "weekend hours posted in the bakery window"
+            }
+          ]
+        }
+      ],
+      "corrections": []
+    },
+    {
+      "session": 5,
+      "tasks": [
+        {
+          "id": "s5t1",
+          "prompt": "When does the bakery open on Saturday?",
+          "relevant": ["bakery-hours"],
+          "answer": "Saturday hours are 8am to 1pm, per the extended note.",
+          "learnings": []
+        },
+        {
+          "id": "s5t2",
+          "prompt": "Is the farmers market running this Saturday and where is it?",
+          "relevant": ["farmers-market"],
+          "answer": "Yes — Saturdays 8am to noon on the town square.",
+          "learnings": []
+        },
+        {
+          "id": "s5t3",
+          "prompt": "Where can I park near the river for a picnic?",
+          "relevant": ["riverside-park"],
+          "answer": "The picnic tables are in the riverside park; the gravel lot off River Road has free parking, forty spaces.",
+          "learnings": [
+            {
+              "title": "riverside-parking",
+              "hook": "Where to park a car near the river: the gravel lot",
+              "body": "Gravel lot off River Road, free, forty spaces.\nFills by mid-morning on market days.",
+              "intended": "CREATE",
+              "reason": "found the lot on the picnic trip; distinct concept from the park itself"
+            },
+            {
+              "title": "clinic-hours",
+              "hook": "Hours for the Milldale walk-in clinic",
+              "body": "Open 9am to 5pm Monday to Friday.",
+              "intended": "CREATE",
+              "reason": "sign read while passing the clinic"
+            }
+          ]
+        }
+      ],
+      "corrections": []
+    },
+    {
+      "session": 6,
+      "tasks": [
+        {
+          "id": "s6t1",
+          "prompt": "How do I renew my library card this month?",
+          "relevant": ["library-card"],
+          "answer": "Renewal is free every two years — bring one piece of mail to the counter.",
+          "learnings": []
+        },
+        {
+          "id": "s6t2",
+          "prompt": "Which bus route runs past the riverside park?",
+          "relevant": ["bus-schedule", "riverside-park"],
+          "answer": "Route 4 from the square passes Elm Street near the river; the park entrance is a short walk from that stop.",
+          "learnings": []
+        },
+        {
+          "id": "s6t3",
+          "prompt": "Can I still catch the route 4 bus by the square tonight?",
+          "relevant": ["bus-schedule"],
+          "answer": "No — the town notice posted today says route 4 is discontinued; a new route 7 now runs from the square. The walk-in clinic sign by the stop listed Saturday hours too.",
+          "learnings": [
+            {
+              "title": "walk-in-clinic-hours",
+              "hook": "When the walk-in clinic takes walk-ins",
+              "body": "Walk-ins Saturday 10am to 2pm.",
+              "intended": "EXTEND",
+              "reason": "same clinic as the existing note — a paraphrased title the exact matcher will miss, counted as false-CREATE"
+            }
+          ]
+        }
+      ],
+      "corrections": [
+        {
+          "prune": "bus-schedule",
+          "reason": "contradicted by session 6 town notice: route 4 discontinued",
+          "replacement": {
+            "title": "bus-route-7",
+            "hook": "Bus route 7 times, replacing route 4",
+            "body": "Route 7 hourly from the square, 7am to 9pm.\nReplaces route 4 — see [[town-map]] for the streets it crosses."
+          }
+        }
+      ]
+    },
+    {
+      "session": 7,
+      "tasks": [
+        {
+          "id": "s7t1",
+          "prompt": "When was the old mill by the river founded?",
+          "relevant": ["town-history"],
+          "answer": "No note matched this question, so it cannot be answered from memory.",
+          "learnings": []
+        },
+        {
+          "id": "s7t2",
+          "prompt": "Is the pharmacy on Elm Street still open until 6?",
+          "relevant": ["pharmacy-hours"],
+          "answer": "The note says 9am to 6pm — but the new owner posted new hours today: 8am to 8pm every day. The note is now wrong and gets pruned.",
+          "learnings": []
+        },
+        {
+          "id": "s7t3",
+          "prompt": "What is happening at the harvest festival and where is the mayor's office?",
+          "relevant": [],
+          "answer": "The harvest festival runs the first weekend of the month on the square; the mayor's office is on the second floor of the town hall, open Monday to Thursday.",
+          "learnings": [
+            {
+              "title": "harvest-festival",
+              "hook": "The autumn harvest festival: dates and events on the square",
+              "body": "First weekend of the month, on the square.\nCider pressing, stalls, and a lantern walk.",
+              "intended": "CREATE",
+              "reason": "banner read on the square"
+            },
+            {
+              "title": "mayor-office",
+              "hook": "Where the mayor's office is and when it is open",
+              "body": "Town hall, second floor.\nOpen Monday to Thursday, 10am to 4pm.",
+              "intended": "CREATE",
+              "reason": "asked at the town hall"
+            }
+          ]
+        }
+      ],
+      "corrections": [
+        {
+          "prune": "pharmacy-hours",
+          "reason": "new owner posted new hours in session 7; the old note is wrong",
+          "replacement": {
+            "title": "pharmacy-hours",
+            "hook": "Hours for the pharmacy on Elm Street under the new owner",
+            "body": "Open 8am to 8pm every day under the new owner."
+          }
+        }
+      ]
+    },
+    {
+      "session": 8,
+      "tasks": [
+        {
+          "id": "s8t1",
+          "prompt": "When does the bakery open today and is the hardware store open too?",
+          "relevant": ["bakery-hours"],
+          "answer": "The bakery opens 7am weekdays, 8am Saturday; the hardware store on Forge Alley turned out to be open 8am to 6pm.",
+          "learnings": [
+            {
+              "title": "hardware-store",
+              "hook": "The hardware store on Forge Alley: stock and hours",
+              "body": "Open 8am to 6pm, Monday to Saturday.\nStocks paint, tools, and stove parts.",
+              "intended": "CREATE",
+              "reason": "first visit to the hardware store"
+            }
+          ]
+        },
+        {
+          "id": "s8t2",
+          "prompt": "Which route 7 bus gets me to the harvest festival?",
+          "relevant": ["bus-route-7", "harvest-festival"],
+          "answer": "Route 7 runs hourly from the square, and the festival is on the square itself — any morning bus works.",
+          "learnings": []
+        },
+        {
+          "id": "s8t3",
+          "prompt": "Can the bike shop fix a flat tire before the clinic opens?",
+          "relevant": ["bike-repair", "clinic-hours", "walk-in-clinic-hours"],
+          "answer": "Tube work is same-day at the bike shop; the clinic opens at 9am on weekdays (both clinic notes describe the same clinic — the duplicate is the cost of the missed merge).",
+          "learnings": []
+        }
+      ],
+      "corrections": []
+    }
+  ]
+}
