@@ -115,7 +115,10 @@ class Librarian:
         notes = self.notes()
         if name in notes:
             existing = notes[name]
-            merged = existing.body.rstrip("\n") + "\n" + body.strip("\n")
+            # strip("\n") on the merge keeps an empty existing body from
+            # manufacturing a leading newline the parser would strip — which
+            # the write-time round-trip guard would then (rightly) refuse.
+            merged = (existing.body.rstrip("\n") + "\n" + body.strip("\n")).strip("\n")
             self._write_note(Note(meta=existing.meta, body=merged))
             self._log(session, "EXTEND", name, reason)
             op = "EXTEND"

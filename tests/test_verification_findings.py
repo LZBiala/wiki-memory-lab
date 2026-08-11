@@ -78,6 +78,12 @@ class TestNoMutationBeforeValidation:
         lib.upsert("a-note", "hook", "body", 1, "learned")
         lib.recall(["a-note", "a-note"], 2, "task")
         assert lib.notes()["a-note"].meta.recall_count == 2
+        records = [
+            json.loads(line)
+            for line in lib.ops_log_path.read_text("utf-8").splitlines()
+            if line
+        ]
+        assert sum(1 for r in records if r["op"] == "RECALL") == 2
 
 
 class TestReadmePinnedToReality:
@@ -129,6 +135,38 @@ class TestDemoStreamsAnswers:
         assert any(line.startswith("ANSWER:") for line in streamed)
 
 
+class TestBlocklistSeparatorVariants:
+    """Finding: multi-part banned terms spelled with underscores, spaces,
+    dots, slashes, or no separator evaded the token matcher. Verified here
+    with a synthetic term so no real banned vocabulary appears in this file."""
+
+    def test_all_separator_spellings_are_caught(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "blocklist_check", REPO / "tools" / "blocklist_check.py"
+        )
+        assert spec is not None and spec.loader is not None
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+
+        synthetic = {mod._hash("zz-audit-probe"), mod._hash("zzauditprobe")}
+        monkeypatch.setattr(mod, "HASHED_TERMS", frozenset(synthetic))
+        for spelling in (
+            "zz-audit-probe",
+            "zz_audit_probe",
+            "zz audit probe",
+            "zz.audit.probe",
+            "zz/audit/probe",
+            "zzauditprobe",
+            "prefix zz_audit_probe suffix",
+        ):
+            assert mod._token_hits(spelling), spelling
+        assert not mod._token_hits("an innocent line about the town bakery")
+
+
 class TestOpsLogCarriesCorpus:
     """Finding: two corpora interleaved in one ops log with no way to tell
     their records apart."""
@@ -144,14 +182,44 @@ class TestOpsLogCarriesCorpus:
         assert record["corpus"] == "milldale"
 
 
+class TestExtendAfterEmptyBody:
+    """Finding: extending a note created with an empty body was spuriously
+    refused by the write-time round-trip guard (a manufactured leading
+    newline). The merge now strips it."""
+
+    def test_empty_body_note_can_be_extended(self, lib: Librarian) -> None:
+        op1, _ = lib.upsert("empty-note", "a hook", "", 1, "created empty")
+        op2, _ = lib.upsert("empty-note", "ignored", "now some content", 2, "filled in")
+        assert (op1, op2) == ("CREATE", "EXTEND")
+        assert lib.notes()["empty-note"].body == "now some content"
+
+
 class TestCoverageInProcess:
     """Finding: the pipeline was only exercised via subprocess, so standard
     coverage tooling reported the core modules at 0%. This runs the full demo
-    in-process; it is deterministic, so regenerating in place is a no-op."""
+    in-process — against a TEMP COPY of the repo layout (fixtures + README),
+    never the real working tree, so an interrupted test cannot leave committed
+    artifacts deleted mid-regeneration."""
 
-    def test_demo_runs_in_process_and_regenerates(self) -> None:
-        from wikimemlab.__main__ import demo
+    def test_demo_runs_in_process_and_regenerates(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        import shutil
 
-        assert demo(quiet=True) == 0
-        assert (REPO / "metrics.jsonl").exists()
-        assert (REPO / "report" / "hero.svg").exists()
+        import wikimemlab.__main__ as main_mod
+
+        shutil.copytree(REPO / "fixtures", tmp_path / "fixtures")
+        shutil.copy(REPO / "README.md", tmp_path / "README.md")
+        monkeypatch.setattr(main_mod, "FIXTURES", tmp_path / "fixtures")
+        monkeypatch.setattr(main_mod, "README", tmp_path / "README.md")
+        monkeypatch.setattr(main_mod, "WIKI_DIR", tmp_path / "wiki")
+        monkeypatch.setattr(main_mod, "RUNS_DIR", tmp_path / "runs")
+        monkeypatch.setattr(main_mod, "REPORT_DIR", tmp_path / "report")
+        monkeypatch.setattr(main_mod, "METRICS", tmp_path / "metrics.jsonl")
+
+        assert main_mod.demo(quiet=True) == 0
+        assert (tmp_path / "metrics.jsonl").exists()
+        assert (tmp_path / "report" / "hero.svg").exists()
+        # The temp regeneration must be byte-identical to the committed goldens.
+        committed = (REPO / "metrics.jsonl").read_bytes()
+        assert (tmp_path / "metrics.jsonl").read_bytes() == committed

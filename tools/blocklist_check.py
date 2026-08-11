@@ -52,7 +52,8 @@ HASHED_TERMS = frozenset({
     "be118c3c8394311c", "e11d9066e346e727", "d5ab0b36beb10ca1",
     "0751efda24b84e86", "eed92520f2790d33", "7c04c6ce27b049b0",
     "4d8fb4492e7b060e", "057b3d9dddc19a13", "b3bbbf20de1ff788",
-    "047ad106e01a347c", "3cadf01919797eb5",
+    "047ad106e01a347c", "3cadf01919797eb5", "5d08cb9cd7d6ad61",
+    "679734178df2fa8a", "4eaa2b3d1e98a241", "e3ea4b0229246521",
 })
 
 # Generic patterns, safe to publish: user-profile paths, sync/OS directories,
@@ -70,7 +71,7 @@ TOKEN_RE = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 SKIP_DIRS = {".git", "__pycache__", ".pytest_cache", ".ruff_cache", "node_modules"}
 # This file necessarily contains the generic pattern literals it searches for;
 # everything private in it is hashed, so self-skipping hides nothing.
-SKIP_FILES = {"blocklist_check.py"}
+SKIP_FILES = {"tools/blocklist_check.py"}
 TEXT_SUFFIXES = {".py", ".md", ".json", ".jsonl", ".yml", ".yaml", ".toml",
                  ".txt", ".svg", ".cfg", ".ini", ".html", ".css", ".js",
                  ".csv", ".ps1", ".sh", ".ipynb", ""}
@@ -80,14 +81,30 @@ def _hash(token: str) -> str:
     return hashlib.sha256((SALT + token).encode()).hexdigest()[:16]
 
 
+MAX_COMPOUND_PARTS = 4
+
+
 def _token_hits(text: str) -> list[str]:
-    """Every token (and contiguous hyphen-joined sub-sequence) that is banned."""
+    """Every banned token, in any separator spelling.
+
+    Multi-part terms are banned in their hyphenated form, but a leak could be
+    spelled with underscores, dots, slashes, spaces, or no separator at all.
+    So: separators normalize to hyphens before tokenizing, tokens are checked
+    along with every contiguous hyphen-joined sub-sequence (up to
+    MAX_COMPOUND_PARTS parts) INCLUDING windows that span whitespace, and each
+    window is also checked with its hyphens removed (the concatenated
+    spellings carry their own hashes in the list).
+    """
+    normalized = re.sub(r"[_./\\]+", "-", text.lower())
+    words = TOKEN_RE.findall(normalized)
+    parts: list[str] = []
+    for word in words:
+        parts.extend(word.split("-"))
     hits: list[str] = []
-    for token in TOKEN_RE.findall(text.lower()):
-        parts = token.split("-")
-        for i in range(len(parts)):
-            for j in range(i + 1, len(parts) + 1):
-                piece = "-".join(parts[i:j])
+    for i in range(len(parts)):
+        for j in range(i + 1, min(i + MAX_COMPOUND_PARTS, len(parts)) + 1):
+            window = parts[i:j]
+            for piece in ("-".join(window), "".join(window)):
                 if _hash(piece) in HASHED_TERMS:
                     hits.append(piece)
     return hits
@@ -98,7 +115,11 @@ def iter_files(root: Path) -> list[Path]:
     for path in sorted(root.rglob("*")):
         if any(part in SKIP_DIRS for part in path.parts):
             continue
-        if not path.is_file() or path.name in SKIP_FILES:
+        if not path.is_file():
+            continue
+        # Self-skip is exact-path, not by bare filename: only THIS gate file
+        # legitimately carries the generic pattern literals.
+        if str(path.relative_to(root)).replace("\\", "/") in SKIP_FILES:
             continue
         if path.suffix.lower() in TEXT_SUFFIXES:
             out.append(path)

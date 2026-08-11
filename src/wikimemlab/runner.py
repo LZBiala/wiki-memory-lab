@@ -152,13 +152,17 @@ def run_selective(
                     misses += 1
                     # Diagnose the actual cause instead of asserting one:
                     # a transcript that guesses is off-brand for this project.
-                    score = score_note(words(task.prompt), metas_by_name[name])
-                    if score == 0:
-                        why = "its hook gave the scorer nothing to match"
-                    elif score < MIN_SCORE:
-                        why = f"scored {score}, below the recall threshold {MIN_SCORE}"
+                    meta_for_name = metas_by_name.get(name)
+                    if meta_for_name is None:
+                        why = "not present in the wiki at recall time"
                     else:
-                        why = f"scored {score} but was crowded out of the top-k"
+                        score = score_note(words(task.prompt), meta_for_name)
+                        if score == 0:
+                            why = "its hook gave the scorer nothing to match"
+                        elif score < MIN_SCORE:
+                            why = f"scored {score}, below the recall threshold {MIN_SCORE}"
+                        else:
+                            why = f"scored {score} but was crowded out of the top-k"
                     lines.append(f"MISS: {name} (labeled relevant, not recalled — {why})")
                     emit(lines[-1])
 
