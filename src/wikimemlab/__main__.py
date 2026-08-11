@@ -14,7 +14,13 @@ import sys
 from pathlib import Path
 
 from wikimemlab.agents import ScriptedAgent
-from wikimemlab.report import inject_readme, load_rows, render_claims, render_svg
+from wikimemlab.report import (
+    inject_readme,
+    load_rows,
+    render_claims,
+    render_cumulative_svg,
+    render_svg,
+)
 from wikimemlab.runner import run_baselines, run_selective, write_metrics
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -109,9 +115,10 @@ def demo(quiet: bool) -> int:
     write_metrics(METRICS, all_metrics)
     rows = load_rows(METRICS)
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
-    svg = render_svg(rows)
     with (REPORT_DIR / "hero.svg").open("w", encoding="utf-8", newline="\n") as fh:
-        fh.write(svg)
+        fh.write(render_svg(rows))
+    with (REPORT_DIR / "cumulative.svg").open("w", encoding="utf-8", newline="\n") as fh:
+        fh.write(render_cumulative_svg(rows))
     inject_readme(README, render_claims(rows, WIKI_DIR, RUNS_DIR))
 
     emit("")

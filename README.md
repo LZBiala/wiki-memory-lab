@@ -111,9 +111,41 @@ decay window — are pinned to the code and fixtures by tests.)
 | The index is the standing price of selective recall | **246 proxy tokens for 15 notes (~16.4/note, 0.32 of full-corpus cost at session 8)** | measured directly from the generated index and final corpus | one-line hooks are a design commitment — hooks that bloat into paragraphs erode exactly the savings claimed here |
 | Memory stays smaller than what it remembers | **final wiki 4983 bytes (live notes + index + archive) vs 8792 bytes of the session transcripts it was distilled from** | byte sizes of the main-corpus wiki including archived notes vs that corpus's session transcripts only | growth depends on the extend/prune discipline the protocol enforces; a corpus without corrections would grow differently |
 
+Cumulative over the main corpus: selective recall freed **1418 proxy tokens (38.8%)** of context budget vs loading everything — and the gap widens as the wiki grows ([report/cumulative.svg](report/cumulative.svg)). Same caveats as the first row: proxy tokens, ratio-not-absolutes, corpus- and locality-dependent.
+
 <!-- AUTOGEN:END -->
 
 Regenerate everything yourself: `python -m wikimemlab demo --quiet && git diff`.
+
+## Why this matters in production — the honest sell
+
+![cumulative context tokens](report/cumulative.svg)
+
+- **Context budget is money.** Input tokens are what every metered LLM API bills for,
+  session after session. The table above measures exactly how much of that budget
+  index-first selective recall frees on this corpus — and the cumulative chart shows
+  the gap *widening* as the wiki grows, because stuffing scales with corpus size while
+  selective recall scales with the task's working set.
+- **Fewer tokens is also the latency lever** — *mechanism, not a measurement*: this
+  repo measures tokens, not wall-clock, but shorter prompts are the one input-side
+  change that reduces both cost and time-to-first-token on every provider. If you need
+  latency numbers, they belong to your stack, measured there.
+- **Sub-agent fan-out multiplies the bill** — *arithmetic, not a benchmark*: an
+  orchestrator that spawns N sub-agents pays the memory-loading cost N times. Whatever
+  a memory policy saves per agent, fan-out multiplies. This harness measures the
+  per-agent token side; your orchestrator supplies the N.
+- **Auditable memory is debuggable memory.** When an agent misbehaves, the first
+  question is "what did it believe, and why?" Here that's an `ls` and a grep: every
+  RECALL/CREATE/EXTEND/PRUNE/ARCHIVE is one ops-log line with a written reason, and
+  deleted knowledge sits in an archive with its cause of death. That is an incident
+  review that takes minutes, not a forensic dig.
+- **Reviewable by anyone, with no tooling.** The memory is markdown. A teammate, an
+  auditor, or a hiring manager can open the folder and read what the agent knows —
+  which is also why this page can show you real transcripts instead of screenshots.
+
+Every claim in this section either points at a drift-gated number above or is labeled
+as the mechanism it is. That's the product: not "memory makes agents better," but
+**a measured cost structure and an audit trail you can hold to account.**
 
 ## What this does NOT show
 

@@ -134,6 +134,107 @@ def _totals(rows: list[Row], corpus: str, mode: str) -> int:
     return sum(t for _, t in _series(rows, corpus, mode))
 
 
+def _cumulative(points: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    out: list[tuple[int, int]] = []
+    running = 0
+    for session, tokens in points:
+        running += tokens
+        out.append((session, running))
+    return out
+
+
+def render_cumulative_svg(rows: list[Row], corpus: str = "milldale") -> str:
+    """Cumulative context cost, selective vs stuff — the gap IS the savings.
+
+    Same honesty rules as the hero chart: proxy tokens, scripted agent, and
+    the disclaimer lives inside the legend so screenshots keep it. The final
+    freed-token figure is computed from the same rows the claims table uses.
+    """
+    width, height = 760, 420
+    ml, mr, mt, mb = 70, 20, 34, 84
+    plot_w, plot_h = width - ml - mr, height - mt - mb
+
+    sel = _cumulative(_series(rows, corpus, "selective"))
+    stuff = _cumulative(_series(rows, corpus, "stuff"))
+    if not sel or not stuff:
+        return ""
+    sessions = [s for s, _ in sel]
+    y_max_raw = max(stuff[-1][1], sel[-1][1])
+    y_max = ((y_max_raw // 500) + 1) * 500
+    saved = stuff[-1][1] - sel[-1][1]
+    saved_pct = 100.0 * saved / stuff[-1][1] if stuff[-1][1] else 0.0
+
+    def x_of(session: int) -> float:
+        if len(sessions) == 1:
+            return ml + plot_w / 2
+        frac = (session - sessions[0]) / (sessions[-1] - sessions[0])
+        return ml + frac * plot_w
+
+    def y_of(tokens: int) -> float:
+        return mt + plot_h * (1 - tokens / y_max)
+
+    parts: list[str] = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
+        f'viewBox="0 0 {width} {height}" font-family="monospace" font-size="12">',
+        f'<rect width="{width}" height="{height}" fill="#ffffff"/>',
+        f'<text x="{ml}" y="20" font-size="14" fill="#111111">'
+        f"cumulative context tokens — {corpus} corpus (the gap is the freed budget)</text>",
+    ]
+
+    for i in range(0, y_max + 1, 500):
+        y = y_of(i)
+        parts.append(
+            f'<line x1="{ml}" y1="{y:.1f}" x2="{width - mr}" y2="{y:.1f}" '
+            f'stroke="#e5e7eb" stroke-width="1"/>'
+        )
+        parts.append(
+            f'<text x="{ml - 8}" y="{y + 4:.1f}" text-anchor="end" fill="#374151">{i}</text>'
+        )
+    for s in sessions:
+        parts.append(
+            f'<text x="{x_of(s):.1f}" y="{mt + plot_h + 18}" text-anchor="middle" '
+            f'fill="#374151">{s}</text>'
+        )
+    parts.append(
+        f'<text x="{ml + plot_w / 2:.1f}" y="{mt + plot_h + 34}" text-anchor="middle" '
+        f'fill="#374151">session</text>'
+    )
+
+    # shaded gap between the two cumulative curves
+    gap_pts = [f"{x_of(s):.1f},{y_of(t):.1f}" for s, t in stuff]
+    gap_pts += [f"{x_of(s):.1f},{y_of(t):.1f}" for s, t in reversed(sel)]
+    parts.append(
+        f'<polygon points="{" ".join(gap_pts)}" fill="#2563eb" opacity="0.08"/>'
+    )
+    for pts, color in ((stuff, _COLORS["stuff"]), (sel, _COLORS["selective"])):
+        coords = " ".join(f"{x_of(s):.1f},{y_of(t):.1f}" for s, t in pts)
+        parts.append(
+            f'<polyline points="{coords}" fill="none" stroke="{color}" stroke-width="2.5"/>'
+        )
+
+    end_y = (y_of(sel[-1][1]) + y_of(stuff[-1][1])) / 2
+    parts.append(
+        f'<text x="{width - mr - 6}" y="{end_y:.1f}" text-anchor="end" fill="#1d4ed8" '
+        f'font-weight="bold">{saved} proxy tokens freed ({saved_pct:.1f}%)</text>'
+    )
+
+    legend_y = height - 40
+    for i, (mode, label) in enumerate(
+        (("stuff", "stuff-everything (cumulative)"), ("selective", "selective recall (cumulative)"))
+    ):
+        y = legend_y + i * 16
+        parts.append(
+            f'<line x1="{ml}" y1="{y}" x2="{ml + 26}" y2="{y}" stroke="{_COLORS[mode]}" '
+            f'stroke-width="2.5"/>'
+        )
+        parts.append(f'<text x="{ml + 34}" y="{y + 4}" fill="#111111">{label}</text>')
+    parts.append(
+        f'<text x="{ml}" y="{legend_y - 12}" fill="#991b1b" font-size="12">{DISCLAIMER}</text>'
+    )
+    parts.append("</svg>")
+    return "\n".join(parts) + "\n"
+
+
 def _glob_bytes(path: Path, pattern: str) -> int:
     return sum(len(p.read_bytes()) for p in sorted(path.glob(pattern)))
 
@@ -245,6 +346,17 @@ def render_claims(rows: list[Row], wiki_dir: Path, runs_dir: Path) -> str:
             "corrections would grow differently |"
         ),
     ]
+
+    saved = stuff_total - sel_total
+    saved_pct = 100.0 * saved / stuff_total if stuff_total else 0.0
+    lines.append("")
+    lines.append(
+        f"Cumulative over the main corpus: selective recall freed **{saved} proxy "
+        f"tokens ({saved_pct:.1f}%)** of context budget vs loading everything — and "
+        "the gap widens as the wiki grows "
+        "([report/cumulative.svg](report/cumulative.svg)). Same caveats as the first "
+        "row: proxy tokens, ratio-not-absolutes, corpus- and locality-dependent."
+    )
     return "\n".join(lines)
 
 

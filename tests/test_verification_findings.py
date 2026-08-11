@@ -220,6 +220,7 @@ class TestCoverageInProcess:
         assert main_mod.demo(quiet=True) == 0
         assert (tmp_path / "metrics.jsonl").exists()
         assert (tmp_path / "report" / "hero.svg").exists()
+        assert (tmp_path / "report" / "cumulative.svg").exists()
         # The temp regeneration must be byte-identical to the committed goldens.
         committed = (REPO / "metrics.jsonl").read_bytes()
         assert (tmp_path / "metrics.jsonl").read_bytes() == committed
