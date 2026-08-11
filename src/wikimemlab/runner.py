@@ -23,6 +23,7 @@ from typing import Callable
 from wikimemlab.agents import Agent, Task
 from wikimemlab.frontmatter import Note
 from wikimemlab.protocol import Librarian
+from wikimemlab.scorer import MIN_SCORE, score_note, words
 from wikimemlab.tokens import proxy_tokens
 
 Emit = Callable[[str], None]
@@ -32,7 +33,7 @@ def _fmt(x: float) -> str:
     return f"{x:.2f}"
 
 
-@dataclass
+@dataclass(frozen=True)
 class SessionMetrics:
     corpus: str
     mode: str
@@ -53,7 +54,7 @@ class SessionMetrics:
     failed_tasks: int = 0
 
     def to_json(self) -> str:
-        return json.dumps(self.__dict__, sort_keys=True)
+        return json.dumps(dict(self.__dict__), sort_keys=True)
 
 
 @dataclass(frozen=True)
@@ -89,7 +90,9 @@ def run_selective(
     """The hero run: real wiki on disk, transcripts, metrics, snapshots."""
     data = load_corpus(corpus_path)
     corpus = str(data["corpus"])
-    lib = Librarian(wiki_dir=wiki_dir, ops_log_path=runs_dir / "ops.jsonl")
+    lib = Librarian(
+        wiki_dir=wiki_dir, ops_log_path=runs_dir / "ops.jsonl", corpus_label=corpus
+    )
     metrics: list[SessionMetrics] = []
     snapshots: dict[int, dict[str, str]] = {}
 
@@ -143,16 +146,24 @@ def run_selective(
             hits += len(set(chosen) & set(task.relevant))
             n_recalled += len(chosen)
             n_relevant += len(task.relevant)
+            metas_by_name = {m.name: m for m in metas}
             for name in task.relevant:
                 if name not in chosen:
                     misses += 1
-                    lines.append(
-                        f"MISS: {name} (labeled relevant, not recalled — "
-                        f"its hook gave the scorer nothing to match)"
-                    )
+                    # Diagnose the actual cause instead of asserting one:
+                    # a transcript that guesses is off-brand for this project.
+                    score = score_note(words(task.prompt), metas_by_name[name])
+                    if score == 0:
+                        why = "its hook gave the scorer nothing to match"
+                    elif score < MIN_SCORE:
+                        why = f"scored {score}, below the recall threshold {MIN_SCORE}"
+                    else:
+                        why = f"scored {score} but was crowded out of the top-k"
+                    lines.append(f"MISS: {name} (labeled relevant, not recalled — {why})")
                     emit(lines[-1])
 
             lines.append(f"ANSWER: {agent.answer(task, recalled)}")
+            emit(lines[-1])
 
             for learning in raw_task.get("learnings", []):
                 op, name = lib.upsert(

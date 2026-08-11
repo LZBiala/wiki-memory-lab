@@ -58,6 +58,18 @@ def _clean() -> None:
 
 
 def demo(quiet: bool) -> int:
+    # Fail fast when not run from a source checkout: REPO_ROOT is derived from
+    # this file's location, and cleaning artifact dirs anywhere else (e.g. a
+    # site-packages parent under a plain non-editable install) must not happen.
+    if not (FIXTURES / "milldale" / "sessions.json").exists():
+        print(
+            "wikimemlab demo must run from a source checkout "
+            "(pip install -e . or PYTHONPATH=src) — fixtures not found at "
+            f"{FIXTURES}",
+            file=sys.stderr,
+        )
+        return 1
+
     emit = (lambda _line: None) if quiet else print
     agent = ScriptedAgent()
 

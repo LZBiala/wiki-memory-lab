@@ -20,9 +20,10 @@ import pytest
 REPO = Path(__file__).resolve().parents[1]
 FIXTURES = REPO / "fixtures"
 
-# Dates (2026-08-10), clock times with seconds (12:34:56), and ISO datetimes
-# must never appear in generated artifacts. Fixture prose like "9am to 6pm" is
-# fine — the ban is on machine timestamps, which would break the drift gate.
+# Dates (e.g. 1999-12-31), clock times with seconds (12:34:56), and ISO
+# datetimes must never appear in generated artifacts. Fixture prose like
+# "9am to 6pm" is fine — the ban is on machine timestamps, which would break
+# the drift gate.
 WALLCLOCK_RE = re.compile(r"\d{4}-\d{2}-\d{2}|\d{1,2}:\d{2}:\d{2}|\d{2}:\d{2}(?!am|pm)")
 
 FORBIDDEN_IMPORTS = ("socket", "urllib", "http.client", "requests", "subprocess")

@@ -32,10 +32,13 @@ class ProtocolError(ValueError):
 
 
 class Librarian:
-    def __init__(self, wiki_dir: Path, ops_log_path: Path) -> None:
+    def __init__(
+        self, wiki_dir: Path, ops_log_path: Path, corpus_label: str = ""
+    ) -> None:
         self.wiki_dir = wiki_dir
         self.archive_dir = wiki_dir / ARCHIVE_DIR
         self.ops_log_path = ops_log_path
+        self.corpus_label = corpus_label
         self.wiki_dir.mkdir(parents=True, exist_ok=True)
         self.archive_dir.mkdir(parents=True, exist_ok=True)
         self.ops_log_path.parent.mkdir(parents=True, exist_ok=True)
@@ -63,13 +66,19 @@ class Librarian:
     # ---------- operations (each one logs, with a reason) ----------
 
     def recall(self, names: list[str], session: int, reason: str) -> list[Note]:
-        """Load notes into context; stamps last_recalled_session/recall_count."""
-        notes = self.notes()
+        """Load notes into context; stamps last_recalled_session/recall_count.
+
+        All validation happens BEFORE the first disk write: a bad reason or an
+        unknown name must never leave a half-applied, unlogged mutation behind.
+        """
+        _require_reason(reason)
+        known = self.notes()
+        unknown = [n for n in names if n not in known]
+        if unknown:
+            raise ProtocolError(f"recall of unknown note(s): {unknown}")
         out: list[Note] = []
         for name in names:
-            if name not in notes:
-                raise ProtocolError(f"recall of unknown note {name!r}")
-            note = notes[name]
+            note = self.notes()[name]  # re-read: duplicate names stamp twice
             meta = replace(
                 note.meta,
                 last_recalled_session=session,
@@ -89,9 +98,20 @@ class Librarian:
         """EXTEND if a note with the same normalized title exists, else CREATE.
 
         Returns (op, name) where op is 'EXTEND' or 'CREATE'.
+
+        Content is validated BEFORE anything touches disk or the ops log: a
+        hook containing a newline (entirely realistic from a live-model
+        write-back) would corrupt the frontmatter of every later read, and a
+        note named like a reserved file would clobber the index. Both are
+        refused loudly instead of recorded as a successful CREATE.
         """
         _require_reason(reason)
         name = normalize_title(title)
+        reserved = {INDEX_NAME.rsplit(".", 1)[0], ARCHIVE_DIR}
+        if name in reserved:
+            raise ProtocolError(f"note name {name!r} is reserved")
+        if "\n" in hook or "\r" in hook or hook != hook.strip():
+            raise ProtocolError(f"hook must be a single trimmed line, got {hook!r}")
         notes = self.notes()
         if name in notes:
             existing = notes[name]
@@ -174,11 +194,23 @@ class Librarian:
         src.unlink()
 
     def _write_note(self, note: Note) -> None:
-        self._write_text(self.wiki_dir / f"{note.meta.name}.md", note.render())
+        rendered = note.render()
+        if parse_note(rendered) != note:
+            raise ProtocolError(
+                f"note {note.meta.name!r} does not survive a render/parse "
+                f"round-trip; refusing to write a file that would brick the store"
+            )
+        self._write_text(self.wiki_dir / f"{note.meta.name}.md", rendered)
 
     def _log(self, session: int, op: str, name: str, reason: str) -> None:
         _require_reason(reason)
-        record = {"session": session, "op": op, "note": name, "reason": reason}
+        record = {
+            "corpus": self.corpus_label,
+            "session": session,
+            "op": op,
+            "note": name,
+            "reason": reason,
+        }
         with self.ops_log_path.open("a", encoding="utf-8", newline="\n") as fh:
             fh.write(json.dumps(record, sort_keys=True) + "\n")
 
