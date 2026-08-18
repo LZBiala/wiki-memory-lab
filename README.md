@@ -215,6 +215,29 @@ tools/              blocklist_check.py — repo hygiene gate (the repo's first c
   alters a published number without updating the committed artifacts fails the
   build, on purpose, loudly.
 
+## Field notes (2026)
+
+In 2026 terms this repo is an agent-memory evaluation framework built on the
+files-over-vectors pattern. Public write-ups this year converged on "running
+profile + selective recall" as the consensus memory architecture — the design
+here implements that pattern as an inspectable markdown wiki, built
+independently of those write-ups. The published 1.27x losing case doubles as
+the field's "memory adds nothing here" honest baseline. Further reading:
+[swirlai's State of Context Engineering 2026](https://www.newsletter.swirlai.com/p/state-of-context-engineering-in-2026)
+and [Graphlit's survey of memory frameworks](https://www.graphlit.com/blog/survey-of-ai-agent-memory-frameworks).
+
+## Roadmap
+
+Future work — nothing below exists yet, and none of it is a claim.
+
+- **k-run live-model variance study** — run the harness k times against a live
+  model and publish the variance as a separate, clearly-labeled study. Per the
+  standing rule above, those results will never appear inside the CI-gated
+  claims block.
+- **Decision-ledger recall policy experiment** — ranked recall of past
+  decisions plus their outcomes, measured against the existing index-first
+  policy on the same fixtures.
+
 ## License
 
 MIT.
