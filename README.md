@@ -34,6 +34,16 @@ that concept small and then **measures it**. No affiliation; just attribution.
 product, and not a claim that any model "gets smarter." It is a memory
 protocol, an audit log, and a harness that measures both.
 
+## In plain English
+
+The recipe box above is the mechanism. Here is what the headline numbers mean.
+Reading selectively cut token use to 0.61 of what loading every note costs —
+about 61 cents on the dollar, and tokens are the units AI services bill by. On
+a tiny memory the method lost, costing 1.27 times more, and that losing number
+is published on purpose. And when graded on pulling the right notes, it scored
+0.95 — nearly perfect, on a test the author wrote themselves, which is exactly
+why it is labeled an upper bound rather than a boast.
+
 ## Quickstart (three commands, no keys)
 
 ```
@@ -84,15 +94,15 @@ runs/ops.jsonl      ← every RECALL / CREATE / EXTEND / PRUNE / ARCHIVE, each w
 - **Index-first selective recall** — skim one line per note, load only what
   scores against the task. The index is the standing overhead selective recall
   pays every session; it is measured below, not hidden.
-- **Extend-before-create** — a write-back whose normalized title already
-  exists extends that note. The matcher is exact on purpose; what it misses is
+- **Extend-before-create** — when a new note's title matches one already in
+  the wiki, the agent adds to that note instead of creating a duplicate. The matcher is exact on purpose; what it misses is
   counted (see the confusion row), not papered over.
 - **Prune with a reason** — a note proven wrong is archived with a mandatory
   written reason. The protocol refuses an empty one.
 - **One decay rule** — a note neither created nor recalled for 5 sessions is
   archived automatically. Memory that only accumulates is a junk drawer.
 
-## Claims, treated like SLOs
+## Claims, retested on every change (SLO-style)
 
 Each claim ships with its measurement command and its honest caveat in the
 same row. The table below is **rendered by `report.py` from `metrics.jsonl`**
@@ -119,8 +129,8 @@ Regenerate everything yourself: `python -m wikimemlab demo --quiet && git diff`.
 
 ## The unhobbling reading of the crossover
 
-The 1.27x crossover above is usually read as a limitation of this harness on
-small corpora. Read differently, it names a general pattern: scaffolding is
+The 1.27x crossover above — the case where this design loses — is usually
+read as a problem that only appears when the memory is small. Read differently, it names a general pattern: scaffolding is
 overhead a task has to earn back, not a default good. Index-first selective
 recall spends 246 proxy tokens on the index before it recalls a single note
 (see the index row) — a real cost, paid every session, in exchange for
