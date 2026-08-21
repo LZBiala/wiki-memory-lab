@@ -22,7 +22,7 @@ FIXTURES = REPO / "fixtures"
 
 # Dates (e.g. 1999-12-31), clock times with seconds (12:34:56), and ISO
 # datetimes must never appear in generated artifacts. Fixture prose like
-# "9am to 6pm" is fine — the ban is on machine timestamps, which would break
+# "9am to 6pm" is fine - the ban is on machine timestamps, which would break
 # the drift gate.
 WALLCLOCK_RE = re.compile(r"\d{4}-\d{2}-\d{2}|\d{1,2}:\d{2}:\d{2}|\d{2}:\d{2}(?!am|pm)")
 
@@ -34,7 +34,7 @@ def run_demo(workdir: Path) -> None:
     shutil.copytree(REPO / "src", workdir / "src")
     shutil.copytree(FIXTURES, workdir / "fixtures")
     shutil.copy(REPO / "README.md", workdir / "README.md")
-    result = subprocess.run(  # noqa: S603 — running our own module under test
+    result = subprocess.run(  # noqa: S603 - running our own module under test
         [sys.executable, "-m", "wikimemlab", "demo", "--quiet"],
         cwd=workdir,
         env={**os.environ, "PYTHONPATH": str(workdir / "src")},
@@ -190,7 +190,7 @@ class TestKeyless:
 
 class TestBlocklist:
     def test_repo_passes_its_own_hygiene_gate(self) -> None:
-        result = subprocess.run(  # noqa: S603 — running our own tool under test
+        result = subprocess.run(  # noqa: S603 - running our own tool under test
             [sys.executable, str(REPO / "tools" / "blocklist_check.py")],
             capture_output=True,
             text=True,

@@ -59,7 +59,7 @@ class TestReservedNames:
 
 class TestNoMutationBeforeValidation:
     """Finding: recall() stamped notes to disk before validating the reason
-    or the full name list — mutation with no audit record."""
+    or the full name list - mutation with no audit record."""
 
     def test_bad_reason_leaves_store_untouched(self, lib: Librarian) -> None:
         lib.upsert("a-note", "hook", "body", 1, "learned")
@@ -197,7 +197,7 @@ class TestExtendAfterEmptyBody:
 class TestCoverageInProcess:
     """Finding: the pipeline was only exercised via subprocess, so standard
     coverage tooling reported the core modules at 0%. This runs the full demo
-    in-process — against a TEMP COPY of the repo layout (fixtures + README),
+    in-process - against a TEMP COPY of the repo layout (fixtures + README),
     never the real working tree, so an interrupted test cannot leave committed
     artifacts deleted mid-regeneration."""
 

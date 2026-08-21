@@ -29,7 +29,7 @@
             {
               "title": "town-map",
               "hook": "Layout of Milldale: which streets cross and where the square sits",
-              "body": "Main Street runs north from the square.\nOak Lane crosses east at the second block.\nThe bakery sits on Main Street — see [[bakery-hours]].",
+              "body": "Main Street runs north from the square.\nOak Lane crosses east at the second block.\nThe bakery sits on Main Street - see [[bakery-hours]].",
               "intended": "CREATE",
               "reason": "walked the route and mapped it"
             },
@@ -178,7 +178,7 @@
           "id": "s5t2",
           "prompt": "Is the farmers market running this Saturday and where is it?",
           "relevant": ["farmers-market"],
-          "answer": "Yes — Saturdays 8am to noon on the town square.",
+          "answer": "Yes - Saturdays 8am to noon on the town square.",
           "learnings": []
         },
         {
@@ -213,7 +213,7 @@
           "id": "s6t1",
           "prompt": "How do I renew my library card this month?",
           "relevant": ["library-card"],
-          "answer": "Renewal is free every two years — bring one piece of mail to the counter.",
+          "answer": "Renewal is free every two years - bring one piece of mail to the counter.",
           "learnings": []
         },
         {
@@ -227,14 +227,14 @@
           "id": "s6t3",
           "prompt": "Can I still catch the route 4 bus by the square tonight?",
           "relevant": ["bus-schedule"],
-          "answer": "No — the town notice posted today says route 4 is discontinued; a new route 7 now runs from the square. The walk-in clinic sign by the stop listed Saturday hours too.",
+          "answer": "No - the town notice posted today says route 4 is discontinued; a new route 7 now runs from the square. The walk-in clinic sign by the stop listed Saturday hours too.",
           "learnings": [
             {
               "title": "walk-in-clinic-hours",
               "hook": "When the walk-in clinic takes walk-ins",
               "body": "Walk-ins Saturday 10am to 2pm.",
               "intended": "EXTEND",
-              "reason": "same clinic as the existing note — a paraphrased title the exact matcher will miss, counted as false-CREATE"
+              "reason": "same clinic as the existing note - a paraphrased title the exact matcher will miss, counted as false-CREATE"
             }
           ]
         }
@@ -246,7 +246,7 @@
           "replacement": {
             "title": "bus-route-7",
             "hook": "Bus route 7 times, replacing route 4",
-            "body": "Route 7 hourly from the square, 7am to 9pm.\nReplaces route 4 — see [[town-map]] for the streets it crosses."
+            "body": "Route 7 hourly from the square, 7am to 9pm.\nReplaces route 4 - see [[town-map]] for the streets it crosses."
           }
         }
       ]
@@ -265,7 +265,7 @@
           "id": "s7t2",
           "prompt": "Is the pharmacy on Elm Street still open until 6?",
           "relevant": ["pharmacy-hours"],
-          "answer": "The note says 9am to 6pm — but the new owner posted new hours today: 8am to 8pm every day. The note is now wrong and gets pruned.",
+          "answer": "The note says 9am to 6pm - but the new owner posted new hours today: 8am to 8pm every day. The note is now wrong and gets pruned.",
           "learnings": []
         },
         {
@@ -325,14 +325,14 @@
           "id": "s8t2",
           "prompt": "Which route 7 bus gets me to the harvest festival?",
           "relevant": ["bus-route-7", "harvest-festival"],
-          "answer": "Route 7 runs hourly from the square, and the festival is on the square itself — any morning bus works.",
+          "answer": "Route 7 runs hourly from the square, and the festival is on the square itself - any morning bus works.",
           "learnings": []
         },
         {
           "id": "s8t3",
           "prompt": "Can the bike shop fix a flat tire before the clinic opens?",
           "relevant": ["bike-repair", "clinic-hours", "walk-in-clinic-hours"],
-          "answer": "Tube work is same-day at the bike shop; the clinic opens at 9am on weekdays (both clinic notes describe the same clinic — the duplicate is the cost of the missed merge).",
+          "answer": "Tube work is same-day at the bike shop; the clinic opens at 9am on weekdays (both clinic notes describe the same clinic - the duplicate is the cost of the missed merge).",
           "learnings": []
         }
       ],

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>wiki-memory-lab — watch an AI agent's memory work, in plain text</title>
+<title>wiki-memory-lab - watch an AI agent's memory work, in plain text</title>
 <style>
   :root {
     --ink: #111827; --muted: #6b7280; --bg: #ffffff; --panel: #f8fafc;
@@ -139,12 +139,12 @@
 
 <header class="hero">
   <div class="wrap">
-    <h1><span>wiki-memory-lab</span> — watch an AI agent's memory work</h1>
+    <h1><span>wiki-memory-lab</span> - watch an AI agent's memory work</h1>
     <p class="tag">Long-term memory for AI agents as a <b>human-readable markdown wiki</b>:
     an index skimmed at session start, selective recall of only the notes a task needs,
-    and notes that get extended — or thrown out, with a written reason — as they prove
+    and notes that get extended - or thrown out, with a written reason - as they prove
     right or wrong.</p>
-    <div class="badge">✓ every number on this page regenerates in CI with zero API keys — if a claim drifts, the build fails</div>
+    <div class="badge">✓ every number on this page regenerates in CI with zero API keys - if a claim drifts, the build fails</div>
     <nav class="chips">
       <a href="#idea">The idea</a>
       <a href="#loop">The loop</a>
@@ -161,15 +161,15 @@
     <h2>The idea in 30 seconds</h2>
     <div class="recipe">
       Most AI assistants either forget everything between chats or reread their entire
-      diary before every answer — slow and wasteful. This one keeps a <b>recipe box</b>:
+      diary before every answer - slow and wasteful. This one keeps a <b>recipe box</b>:
       at the start of a session it skims the card titles, pulls only the two or three
       cards today's question needs, updates those cards afterward, and throws out any
-      card proven wrong. And the box is just plain text — open the folder in any editor
+      card proven wrong. And the box is just plain text - open the folder in any editor
       and read your AI's whole memory yourself.
     </div>
     <p class="lead" style="margin-top:14px">The concept of agent memory as a
     self-maintained markdown wiki is <a href="https://karpathy.ai/">Andrej Karpathy's</a>
-    (attribution, no affiliation). This lab builds it small — and then <b>measures it</b>.</p>
+    (attribution, no affiliation). This lab builds it small - and then <b>measures it</b>.</p>
   </div>
 </section>
 
@@ -186,10 +186,10 @@
   <div class="wrap">
     <h2>A real session, replayed</h2>
     <p class="lead">These lines are quoted from the committed transcripts
-    (<code>runs/</code>) that CI regenerates on every push. Step through the story —
+    (<code>runs/</code>) that CI regenerates on every push. Step through the story -
     including the moment the memory <b>deletes something it learned was wrong</b>.</p>
     <div class="player">
-      <div class="term" id="termOut"><span class="dim">MODE: ScriptedAgent — deterministic, zero API keys; write-backs are rule-driven</span>
+      <div class="term" id="termOut"><span class="dim">MODE: ScriptedAgent - deterministic, zero API keys; write-backs are rule-driven</span>
 <span class="cursor"></span></div>
       <div>
         <div class="explain" id="explainBox"></div>
@@ -207,9 +207,9 @@
 
 <section id="numbers">
   <div class="wrap">
-    <h2>The numbers — each with its honest caveat</h2>
+    <h2>The numbers - each with its honest caveat</h2>
     <p class="lead">The full table lives in the README, rendered from
-    <code>metrics.jsonl</code> by <code>report.py</code> — no measured number is typed
+    <code>metrics.jsonl</code> by <code>report.py</code> - no measured number is typed
     by hand, and the CI drift gate fails the build if regeneration disagrees.</p>
     <div class="claims">
       <div class="claim">
@@ -221,14 +221,14 @@
       <div class="claim">
         <div class="big red">1.27×</div>
         <h3>…and where the design LOSES</h3>
-        <p>On a small 8-note corpus, stuffing wins — the index is a standing
+        <p>On a small 8-note corpus, stuffing wins - the index is a standing
         per-session tax. Published on purpose: a claim without its boundary isn't
         finished.</p>
       </div>
       <div class="claim">
         <div class="big green">0.95</div>
         <h3>Retrieval precision &amp; recall</h3>
-        <p>Labeled an <b>upper bound by construction</b> in the same row — the same
+        <p>Labeled an <b>upper bound by construction</b> in the same row - the same
         author wrote tasks, hooks, and labels. One miss is planted to show what a lazy
         hook costs.</p>
       </div>
@@ -236,19 +236,19 @@
         <div class="big amber">1 / 0</div>
         <h3>false-CREATE / false-EXTEND</h3>
         <p>The exact-title matcher's confusion table. A paraphrased duplicate slips
-        past it — counted and published, not papered over.</p>
+        past it - counted and published, not papered over.</p>
       </div>
     </div>
     <div class="chart">
       <img src="../report/hero.svg" alt="context tokens per session, three loading policies"
            onerror="this.parentElement.querySelector('p').textContent='Chart: see report/hero.svg in the repository.'; this.remove()">
-      <p>The hero chart — its legend carries the disclaimer <i>inside the SVG</i>, so it
-      survives screenshots: “scripted agent — measures the harness, not model capability”.</p>
+      <p>The hero chart - its legend carries the disclaimer <i>inside the SVG</i>, so it
+      survives screenshots: “scripted agent - measures the harness, not model capability”.</p>
     </div>
     <div class="chart">
       <img src="../report/cumulative.svg" alt="cumulative context tokens, selective vs stuffing, with the freed-budget gap shaded"
            onerror="this.parentElement.querySelector('p').textContent='Chart: see report/cumulative.svg in the repository.'; this.remove()">
-      <p>The cumulative view — the shaded gap is context budget freed, and it
+      <p>The cumulative view - the shaded gap is context budget freed, and it
       <b>widens as the wiki grows</b>: stuffing scales with corpus size, selective
       recall scales with the task's working set. Regenerated by CI like every other
       number here.</p>
@@ -258,7 +258,7 @@
 
 <section id="try">
   <div class="wrap">
-    <h2>Use it yourself — three commands, no keys</h2>
+    <h2>Use it yourself - three commands, no keys</h2>
     <div class="howto">
       <div class="how">
         <div class="n"></div>
@@ -267,7 +267,7 @@
           <pre>git clone https://github.com/LZBiala/wiki-memory-lab
 cd wiki-memory-lab
 pip install -e .</pre>
-          <p>The runtime is Python stdlib only — the empty dependency list is a feature.</p>
+          <p>The runtime is Python stdlib only - the empty dependency list is a feature.</p>
         </div>
       </div>
       <div class="how">
@@ -294,10 +294,10 @@ report/hero.svg  ← the curves you just computed</pre>
       <div class="how">
         <div class="n"></div>
         <div>
-          <h3>Adapt it — bring your own model (v1.1 seam)</h3>
+          <h3>Adapt it - bring your own model (v1.1 seam)</h3>
           <p><code>agents.Agent</code> is the interface: implement
           <code>choose_recall()</code> and <code>answer()</code> with a live model and
-          run the same harness. No live adapter ships in v1.0 — deliberately, so no
+          run the same harness. No live adapter ships in v1.0 - deliberately, so no
           published number can be mistaken for model judgment.</p>
         </div>
       </div>
@@ -311,11 +311,11 @@ report/hero.svg  ← the curves you just computed</pre>
     <div class="honest">
       <h3>The circularity trap, in plain words</h3>
       <p>The bundled agent is scripted. A scripted agent that is told to use memory,
-      using memory, proves nothing about intelligence — so this project never publishes
+      using memory, proves nothing about intelligence - so this project never publishes
       a “task completion” curve, because completion tracks retrieval by construction.
       What the harness measures honestly is the <b>memory protocol itself</b>: token
       arithmetic, retrieval quality of one-line hooks against labeled tasks, and whether
-      merge, prune, and decay fire when they should — including both directions the
+      merge, prune, and decay fire when they should - including both directions the
       title matcher fails.</p>
     </div>
   </div>
@@ -325,7 +325,7 @@ report/hero.svg  ← the curves you just computed</pre>
   <div class="wrap">
     MIT licensed · <a href="https://github.com/LZBiala/wiki-memory-lab">source &amp; README</a> ·
     concept credit <a href="https://karpathy.ai/">Andrej Karpathy</a> ·
-    this page is a static file in <code>docs/</code> — no build system, no external requests.
+    this page is a static file in <code>docs/</code> - no build system, no external requests.
   </div>
 </footer>
 
@@ -333,16 +333,16 @@ report/hero.svg  ← the curves you just computed</pre>
 "use strict";
 /* ---------- session loop stages ---------- */
 const STAGES = [
-  { k: "INDEX", t: "Load the index", d: "One line per note (title + hook). The ONLY memory loaded at session start — the standing tax selective recall pays.",
-    x: "INDEX loaded: 12 notes / 202 tokens", n: "The whole map of the memory costs a couple hundred proxy tokens — not the whole corpus." },
+  { k: "INDEX", t: "Load the index", d: "One line per note (title + hook). The ONLY memory loaded at session start - the standing tax selective recall pays.",
+    x: "INDEX loaded: 12 notes / 202 tokens", n: "The whole map of the memory costs a couple hundred proxy tokens - not the whole corpus." },
   { k: "RECALL", t: "Selective recall", d: "Score each index line against the task; pull only what matters into context. Every recall is logged with a reason.",
-    x: "RECALL: bus-schedule (1 note(s) / 53 tokens)", n: "One note loaded, not fifteen. The scorer is deliberately dumb lexical overlap — its failures stay legible." },
+    x: "RECALL: bus-schedule (1 note(s) / 53 tokens)", n: "One note loaded, not fifteen. The scorer is deliberately dumb lexical overlap - its failures stay legible." },
   { k: "ANSWER", t: "Answer from notes", d: "The reply is grounded in the recalled notes plus the task itself.",
-    x: "ANSWER: No — the town notice posted today says route 4 is discontinued…", n: "Answers cite which notes they came from." },
-  { k: "WRITE-BACK", t: "Write back", d: "New facts extend an existing note when the title matches — else create. Corrections PRUNE a wrong note, with a mandatory written reason.",
-    x: "CORRECTION: PRUNE bus-schedule — contradicted by session 6 town notice", n: "An unrecorded deletion is a mystery; this one is a log line." },
+    x: "ANSWER: No - the town notice posted today says route 4 is discontinued…", n: "Answers cite which notes they came from." },
+  { k: "WRITE-BACK", t: "Write back", d: "New facts extend an existing note when the title matches - else create. Corrections PRUNE a wrong note, with a mandatory written reason.",
+    x: "CORRECTION: PRUNE bus-schedule - contradicted by session 6 town notice", n: "An unrecorded deletion is a mystery; this one is a log line." },
   { k: "DECAY", t: "Decay", d: "A note neither created nor recalled for 5 sessions is archived automatically. Memory that only accumulates is a junk drawer.",
-    x: "DECAY: ARCHIVE school-play — not created or recalled inside the decay window", n: "Archived — never silently deleted. The archive is part of the audit trail." },
+    x: "DECAY: ARCHIVE school-play - not created or recalled inside the decay window", n: "Archived - never silently deleted. The archive is part of the audit trail." },
 ];
 const loopRow = document.getElementById("loopRow");
 const stageDetail = document.getElementById("stageDetail");
@@ -365,32 +365,32 @@ selectStage(0);
 
 /* ---------- real-session player ---------- */
 const BEATS = [
-  { c: "dim", line: "# milldale — session 02", name: "SESSION 2 BEGINS",
-    h: "Recall starts paying off", e: "The wiki holds 3 notes learned in session 1. The index is tiny — and already useful." },
+  { c: "dim", line: "# milldale - session 02", name: "SESSION 2 BEGINS",
+    h: "Recall starts paying off", e: "The wiki holds 3 notes learned in session 1. The index is tiny - and already useful." },
   { c: "", line: "INDEX loaded: 3 notes / 58 tokens", name: "INDEX",
     h: "58 tokens buys the whole map", e: "One line per note. This is all the memory the agent loads up front." },
   { c: "recall", line: "RECALL: bakery-hours (1 note(s) / 50 tokens)", name: "RECALL",
-    h: "Only what the task needs", e: "The question was about the bakery — so only the bakery card comes off the shelf." },
-  { c: "dim", line: "# milldale — session 04", name: "SESSION 4",
-    h: "Memory grows — carefully", e: "New facts keep arriving. The interesting part is HOW they're filed." },
-  { c: "write", line: "WRITE-BACK: EXTEND bakery-hours — weekend hours posted in the bakery window", name: "EXTEND",
-    h: "Extend before create", e: "Weekend hours belong on the existing bakery card — extending it, not spawning a duplicate. Dedupe is enforced at write time, when it's cheap." },
-  { c: "dim", line: "# milldale — session 06", name: "SESSION 6 — THE STAR",
+    h: "Only what the task needs", e: "The question was about the bakery - so only the bakery card comes off the shelf." },
+  { c: "dim", line: "# milldale - session 04", name: "SESSION 4",
+    h: "Memory grows - carefully", e: "New facts keep arriving. The interesting part is HOW they're filed." },
+  { c: "write", line: "WRITE-BACK: EXTEND bakery-hours - weekend hours posted in the bakery window", name: "EXTEND",
+    h: "Extend before create", e: "Weekend hours belong on the existing bakery card - extending it, not spawning a duplicate. Dedupe is enforced at write time, when it's cheap." },
+  { c: "dim", line: "# milldale - session 06", name: "SESSION 6 - THE STAR",
     h: "The world changed. Watch the memory catch up.", e: "A town notice says bus route 4 is discontinued. The agent's note is now WRONG." },
   { c: "recall", line: "RECALL: bus-schedule (1 note(s) / 53 tokens)", name: "RECALL",
-    h: "The stale note is recalled…", e: "The agent pulls its route-4 note — and the session script carries the contradicting notice." },
-  { c: "prune", line: "CORRECTION: PRUNE bus-schedule — contradicted by session 6 town notice: route 4 discontinued", name: "★ PRUNE",
-    h: "Memory that deletes what's proven wrong", e: "The protocol REFUSES a prune without a written reason. The note moves to the archive; the reason lands in the ops log. Deletion with provenance — the whole point of the project." },
-  { c: "write", line: "CORRECTION: CREATE bus-route-7 — replacement for pruned bus-schedule", name: "RECREATE",
+    h: "The stale note is recalled…", e: "The agent pulls its route-4 note - and the session script carries the contradicting notice." },
+  { c: "prune", line: "CORRECTION: PRUNE bus-schedule - contradicted by session 6 town notice: route 4 discontinued", name: "★ PRUNE",
+    h: "Memory that deletes what's proven wrong", e: "The protocol REFUSES a prune without a written reason. The note moves to the archive; the reason lands in the ops log. Deletion with provenance - the whole point of the project." },
+  { c: "write", line: "CORRECTION: CREATE bus-route-7 - replacement for pruned bus-schedule", name: "RECREATE",
     h: "…and learns the replacement", e: "Prune-then-recreate: the memory now reflects the new world, and the audit trail shows exactly when and why it changed." },
-  { c: "", line: "DECAY: ARCHIVE school-play — not created or recalled inside the decay window", name: "DECAY",
-    h: "The junk drawer rule", e: "A one-off note from session 1 was never recalled again. After 5 quiet sessions it's archived automatically — no hoarding." },
-  { c: "dim", line: "# milldale — session 07", name: "SESSION 7 — AN HONEST MISS",
+  { c: "", line: "DECAY: ARCHIVE school-play - not created or recalled inside the decay window", name: "DECAY",
+    h: "The junk drawer rule", e: "A one-off note from session 1 was never recalled again. After 5 quiet sessions it's archived automatically - no hoarding." },
+  { c: "dim", line: "# milldale - session 07", name: "SESSION 7 - AN HONEST MISS",
     h: "The failure is part of the demo", e: "One note was written with a deliberately lazy hook: “assorted notes”. Here's what that costs." },
-  { c: "miss", line: "MISS: town-history (labeled relevant, not recalled — its hook gave the scorer nothing to match)", name: "MISS",
-    h: "A bad hook, caught on camera", e: "The fact was IN memory, but its one-line hook gave the scorer nothing. The transcript shows the miss instead of hiding it — an index is only as good as its hooks." },
+  { c: "miss", line: "MISS: town-history (labeled relevant, not recalled - its hook gave the scorer nothing to match)", name: "MISS",
+    h: "A bad hook, caught on camera", e: "The fact was IN memory, but its one-line hook gave the scorer nothing. The transcript shows the miss instead of hiding it - an index is only as good as its hooks." },
   { c: "", line: "SESSION 06 TOTALS: index 202 + recalled 220 = 422 context tokens", name: "THE BILL",
-    h: "The arithmetic, per session", e: "Index tax + recalled notes = context cost. Summed over 8 sessions: 0.61× the cost of loading everything — with the published crossover where that flips." },
+    h: "The arithmetic, per session", e: "Index tax + recalled notes = context cost. Summed over 8 sessions: 0.61× the cost of loading everything - with the published crossover where that flips." },
 ];
 const termOut = document.getElementById("termOut");
 const explainBox = document.getElementById("explainBox");
@@ -400,7 +400,7 @@ const btnNext = document.getElementById("btnNext");
 const btnReset = document.getElementById("btnReset");
 let pos = 0;
 function render() {
-  let html = '<span class="dim">MODE: ScriptedAgent — deterministic, zero API keys; write-backs are rule-driven</span>\n';
+  let html = '<span class="dim">MODE: ScriptedAgent - deterministic, zero API keys; write-backs are rule-driven</span>\n';
   for (let i = 0; i < pos; i++) {
     const b = BEATS[i];
     html += (b.c ? `<span class="${b.c}">` : "") + escapeHtml(b.line) + (b.c ? "</span>" : "") + "\n";
@@ -409,7 +409,7 @@ function render() {
   termOut.innerHTML = html;
   termOut.scrollTop = termOut.scrollHeight;
   if (pos === 0) {
-    explainBox.innerHTML = `<div class="step-name">READY</div><h3>Press Next to replay the story</h3><p>Thirteen beats from the committed transcripts — recall, extend, the prune, the honest miss, and the bill.</p>`;
+    explainBox.innerHTML = `<div class="step-name">READY</div><h3>Press Next to replay the story</h3><p>Thirteen beats from the committed transcripts - recall, extend, the prune, the honest miss, and the bill.</p>`;
   } else {
     const b = BEATS[pos - 1];
     explainBox.innerHTML = `<div class="step-name">${b.name}</div><h3>${b.h}</h3><p>${b.e}</p>`;

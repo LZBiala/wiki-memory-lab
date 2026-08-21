@@ -26,7 +26,7 @@ BAD_HOOK = meta("town-history", "assorted notes")  # the deliberately lazy hook
 class TestScoring:
     def test_name_words_count_double(self) -> None:
         task = words("what time does the bakery open")
-        # 'bakery' hits the name (2) — 'open' does NOT match 'opening' (no stemming)
+        # 'bakery' hits the name (2) - 'open' does NOT match 'opening' (no stemming)
         assert score_note(task, BAKERY) == 2
 
     def test_hook_words_count_single(self) -> None:

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" font-family="monospace" font-size="12">
 <rect width="760" height="420" fill="#ffffff"/>
-<text x="60" y="20" font-size="14" fill="#111111">context tokens per session — milldale corpus (proxy tokens = chars/4)</text>
+<text x="60" y="20" font-size="14" fill="#111111">context tokens per session - milldale corpus (proxy tokens = chars/4)</text>
 <line x1="60" y1="324.0" x2="740" y2="324.0" stroke="#e5e7eb" stroke-width="1"/>
 <text x="52" y="328.0" text-anchor="end" fill="#374151">0</text>
 <line x1="60" y1="251.5" x2="740" y2="251.5" stroke="#e5e7eb" stroke-width="1"/>
@@ -29,5 +29,5 @@
 <text x="94" y="388" fill="#111111">stuff-everything (all notes, every session)</text>
 <line x1="60" y1="400" x2="86" y2="400" stroke="#6b7280" stroke-width="2.5"/>
 <text x="94" y="404" fill="#111111">no memory (loads nothing, fails recall tasks)</text>
-<text x="60" y="356" fill="#991b1b" font-size="12">scripted agent — measures the harness, not model capability</text>
+<text x="60" y="356" fill="#991b1b" font-size="12">scripted agent - measures the harness, not model capability</text>
 </svg>

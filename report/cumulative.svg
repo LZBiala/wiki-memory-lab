@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" font-family="monospace" font-size="12">
 <rect width="760" height="420" fill="#ffffff"/>
-<text x="70" y="20" font-size="14" fill="#111111">cumulative context tokens — milldale corpus (the gap is the freed budget)</text>
+<text x="70" y="20" font-size="14" fill="#111111">cumulative context tokens - milldale corpus (the gap is the freed budget)</text>
 <line x1="70" y1="336.0" x2="740" y2="336.0" stroke="#e5e7eb" stroke-width="1"/>
 <text x="62" y="340.0" text-anchor="end" fill="#374151">0</text>
 <line x1="70" y1="298.2" x2="740" y2="298.2" stroke="#e5e7eb" stroke-width="1"/>
@@ -36,5 +36,5 @@
 <text x="104" y="384" fill="#111111">stuff-everything (cumulative)</text>
 <line x1="70" y1="396" x2="96" y2="396" stroke="#2563eb" stroke-width="2.5"/>
 <text x="104" y="400" fill="#111111">selective recall (cumulative)</text>
-<text x="70" y="368" fill="#991b1b" font-size="12">scripted agent — measures the harness, not model capability</text>
+<text x="70" y="368" fill="#991b1b" font-size="12">scripted agent - measures the harness, not model capability</text>
 </svg>

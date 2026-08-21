@@ -4,7 +4,7 @@ The guarantees under test:
 1. render() -> parse_note() round-trips byte-identically (determinism).
 2. Unknown, duplicate, or missing keys are ERRORS, never warnings.
 3. Session fields are non-negative integers (logical time only).
-4. normalize_title is the dumb, documented matcher — no cleverness.
+4. normalize_title is the dumb, documented matcher - no cleverness.
 """
 from __future__ import annotations
 

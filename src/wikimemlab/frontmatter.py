@@ -1,4 +1,4 @@
-"""Strict frontmatter for wiki notes — five keys, logical session indices only.
+"""Strict frontmatter for wiki notes - five keys, logical session indices only.
 
 Wall-clock time is banned from every committed artifact (a test greps for it):
 timestamps would make the CI drift gate (`git diff --exit-code` after a fresh

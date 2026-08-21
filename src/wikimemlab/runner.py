@@ -4,8 +4,8 @@ One selective run drives everything:
 - Sessions execute in order: load index -> per task (recall -> answer ->
   write-backs) -> corrections -> decay -> transcript + metrics.
 - At each SESSION START the rendered wiki files are snapshotted in memory.
-  The two baselines replay those IDENTICAL snapshots — stuff-everything
-  loads every rendered file, no-memory loads nothing — so the token
+  The two baselines replay those IDENTICAL snapshots - stuff-everything
+  loads every rendered file, no-memory loads nothing - so the token
   comparison is controlled: same wiki state, different loading policy.
 - Metrics land in metrics.jsonl, one JSON object per (corpus, mode, session),
   floats pin-formatted as strings so the CI drift gate never trips on
@@ -104,7 +104,7 @@ def run_selective(
         index_text = lib.read_index()
         index_tok = proxy_tokens(index_text)
         lines: list[str] = [
-            f"# {corpus} — session {session:02d}",
+            f"# {corpus} - session {session:02d}",
             agent.banner if hasattr(agent, "banner") else f"MODE: {agent.name}",
             "",
             f"INDEX loaded: {len(notes_at_start)} notes / {index_tok} tokens",
@@ -134,7 +134,7 @@ def run_selective(
                 bump("RECALL")
 
             lines.append("")
-            lines.append(f"## task {task.id} — \"{task.prompt}\"")
+            lines.append(f"## task {task.id} - \"{task.prompt}\"")
             if recalled:
                 tok = sum(proxy_tokens(n.render()) for n in recalled)
                 names = ", ".join(n.meta.name for n in recalled)
@@ -163,7 +163,7 @@ def run_selective(
                             why = f"scored {score}, below the recall threshold {MIN_SCORE}"
                         else:
                             why = f"scored {score} but was crowded out of the top-k"
-                    lines.append(f"MISS: {name} (labeled relevant, not recalled — {why})")
+                    lines.append(f"MISS: {name} (labeled relevant, not recalled - {why})")
                     emit(lines[-1])
 
             lines.append(f"ANSWER: {agent.answer(task, recalled)}")
@@ -183,11 +183,11 @@ def run_selective(
                 if intended != op:
                     if op == "CREATE":
                         false_create += 1
-                        suffix = " [intended EXTEND — counted as false-CREATE]"
+                        suffix = " [intended EXTEND - counted as false-CREATE]"
                     else:
                         false_extend += 1
-                        suffix = " [intended CREATE — counted as false-EXTEND]"
-                lines.append(f"WRITE-BACK: {op} {name} — {learning['reason']}{suffix}")
+                        suffix = " [intended CREATE - counted as false-EXTEND]"
+                lines.append(f"WRITE-BACK: {op} {name} - {learning['reason']}{suffix}")
                 emit(lines[-1])
 
         for correction in raw_session.get("corrections", []):
@@ -196,7 +196,7 @@ def run_selective(
             lib.prune(prune_name, session, reason)
             bump("PRUNE")
             lines.append("")
-            lines.append(f"CORRECTION: PRUNE {prune_name} — {reason}")
+            lines.append(f"CORRECTION: PRUNE {prune_name} - {reason}")
             emit(lines[-1])
             replacement = correction.get("replacement")
             if replacement:
@@ -208,14 +208,14 @@ def run_selective(
                     reason=f"replacement for pruned {prune_name}",
                 )
                 bump(op)
-                lines.append(f"CORRECTION: {op} {name} — replacement for pruned {prune_name}")
+                lines.append(f"CORRECTION: {op} {name} - replacement for pruned {prune_name}")
                 emit(lines[-1])
 
         archived = lib.decay(session)
         for name in archived:
             bump("ARCHIVE")
             lines.append(
-                f"DECAY: ARCHIVE {name} — not created or recalled inside the decay window"
+                f"DECAY: ARCHIVE {name} - not created or recalled inside the decay window"
             )
             emit(lines[-1])
 
@@ -274,7 +274,7 @@ def run_baselines(
     data = load_corpus(corpus_path)
     corpus = str(data["corpus"])
     out: list[SessionMetrics] = []
-    summary: list[str] = [f"# {corpus} — baseline replays", ""]
+    summary: list[str] = [f"# {corpus} - baseline replays", ""]
 
     for raw_session in data["sessions"]:  # type: ignore[union-attr]
         session = int(raw_session["session"])
@@ -319,7 +319,7 @@ def run_baselines(
     summary.append("")
     summary.append(
         "Method: both baselines replay the IDENTICAL per-session wiki snapshots "
-        "produced by the selective run — same memory state, different loading policy."
+        "produced by the selective run - same memory state, different loading policy."
     )
     summary.append("")
     path = runs_dir / f"{corpus}-baselines.md"

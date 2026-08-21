@@ -19,16 +19,16 @@ Run it before opening a PR; a red gate locally will be a red gate in CI.
 
 ## What PRs are welcome
 
-- **New adversarial fixtures** — tasks or corpora that push the title matcher,
+- **New adversarial fixtures** - tasks or corpora that push the title matcher,
   the scorer, or the decay rule into a failure direction not yet counted.
-- **New probe tasks with ground-truth labels** — retrieval cases the one-line
+- **New probe tasks with ground-truth labels** - retrieval cases the one-line
   hooks should (or measurably cannot) recover.
-- **New measured defect classes** — a failure mode the harness could count
+- **New measured defect classes** - a failure mode the harness could count
   honestly, with the counting logic and its caveat in the same change.
 - **Documentation fixes** that make a claim clearer without making it bigger.
 
 Changes that alter any published number must regenerate the committed
-artifacts in the same PR — otherwise the drift gate fails, on purpose.
+artifacts in the same PR - otherwise the drift gate fails, on purpose.
 
 ## House law
 

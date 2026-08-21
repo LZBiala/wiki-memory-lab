@@ -34,7 +34,7 @@ class TestUpsert:
         assert (op2, name2) == ("EXTEND", "bakery-hours")
         note = lib.notes()["bakery-hours"]
         assert "Opens 7am." in note.body and "Sat 8am-1pm." in note.body
-        # extend keeps the original hook — hooks are index identity, not content
+        # extend keeps the original hook - hooks are index identity, not content
         assert note.meta.hook == "Bakery opening hours"
 
     def test_paraphrased_duplicate_creates_honestly(self, lib: Librarian) -> None:

@@ -2,10 +2,10 @@
 
 Design rules this module enforces:
 - Every mutation goes through one class, and every operation appends one line
-  to an ops log WITH A WRITTEN REASON — the audit-log property the whole
+  to an ops log WITH A WRITTEN REASON - the audit-log property the whole
   project exists to demonstrate.
 - extend-before-create is exact normalized-title matching (see
-  frontmatter.normalize_title). Paraphrased duplicates therefore CREATE — the
+  frontmatter.normalize_title). Paraphrased duplicates therefore CREATE - the
   harness counts those as false-CREATE instead of hiding them.
 - prune() refuses an empty reason. A memory that deletes without saying why
   is not auditable.
@@ -116,7 +116,7 @@ class Librarian:
         if name in notes:
             existing = notes[name]
             # strip("\n") on the merge keeps an empty existing body from
-            # manufacturing a leading newline the parser would strip — which
+            # manufacturing a leading newline the parser would strip - which
             # the write-time round-trip guard would then (rightly) refuse.
             merged = (existing.body.rstrip("\n") + "\n" + body.strip("\n")).strip("\n")
             self._write_note(Note(meta=existing.meta, body=merged))
@@ -170,14 +170,14 @@ class Librarian:
     def rebuild_index(self) -> None:
         lines = ["# index", ""]
         for name, note in sorted(self.notes().items()):
-            lines.append(f"- [[{name}]] — {note.meta.hook}")
+            lines.append(f"- [[{name}]] - {note.meta.hook}")
         text = "\n".join(lines) + "\n"
         self._write_text(self.wiki_dir / INDEX_NAME, text)
 
     def check_invariants(self) -> None:
         """Index matches disk; no orphan links; all notes parse strictly."""
         notes = self.notes()  # parsing already enforced strictness
-        on_disk = {f"- [[{n}]] — {note.meta.hook}" for n, note in notes.items()}
+        on_disk = {f"- [[{n}]] - {note.meta.hook}" for n, note in notes.items()}
         in_index = {
             line for line in self.read_index().split("\n") if line.startswith("- [[")
         }

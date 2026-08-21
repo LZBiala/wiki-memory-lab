@@ -1,9 +1,9 @@
-"""wikimemlab — long-term memory for AI agents as a human-readable markdown wiki.
+"""wikimemlab - long-term memory for AI agents as a human-readable markdown wiki.
 
 The premise, stated so it can be attacked: an agent's long-term memory can live
-in plain markdown files — an index skimmed at session start, one concept per
+in plain markdown files - an index skimmed at session start, one concept per
 note, selective recall of only the notes a task needs, extend-before-create
-write-back, prune-with-a-written-reason, and a single decay rule — and the
+write-back, prune-with-a-written-reason, and a single decay rule - and the
 token cost, retrieval quality, and protocol behavior of that design can be
 measured deterministically, with zero API keys, in CI.
 

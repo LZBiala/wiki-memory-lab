@@ -1,13 +1,13 @@
 {
   "corpus": "milldale-mini",
-  "description": "The crossover corpus: a small wiki (~8 short notes) where the tasks touch most of the corpus, so index overhead plus recalled notes is measured against simply loading everything. This is the honest arm of the token claim — at this size, stuffing is expected to be cheaper, and the README publishes whichever way the measurement lands.",
+  "description": "The crossover corpus: a small wiki (~8 short notes) where the tasks touch most of the corpus, so index overhead plus recalled notes is measured against simply loading everything. This is the honest arm of the token claim - at this size, stuffing is expected to be cheaper, and the README publishes whichever way the measurement lands.",
   "sessions": [
     {
       "session": 1,
       "tasks": [
         {
           "id": "m1t1",
-          "prompt": "I am new in town — what is on and around the square?",
+          "prompt": "I am new in town - what is on and around the square?",
           "relevant": [],
           "answer": "The candle shop is on the square, the orchard stand sells apples and cider on weekends, the cider press barn runs demos, and there is a lantern walk this weekend.",
           "learnings": [
@@ -87,7 +87,7 @@
           "id": "m2t1",
           "prompt": "Is the orchard stand selling cider this weekend?",
           "relevant": ["orchard-stand", "cider-press"],
-          "answer": "Yes — the stand runs weekends, and the press barn demos are Saturday mornings.",
+          "answer": "Yes - the stand runs weekends, and the press barn demos are Saturday mornings.",
           "learnings": []
         },
         {
@@ -101,7 +101,7 @@
           "id": "m2t3",
           "prompt": "Is the footbridge still closed for repair?",
           "relevant": ["bridge-repair"],
-          "answer": "Yes — the closure notice is still posted.",
+          "answer": "Yes - the closure notice is still posted.",
           "learnings": []
         },
         {

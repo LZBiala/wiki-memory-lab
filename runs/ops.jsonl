@@ -25,7 +25,7 @@
 {"corpus": "milldale", "note": "bus-schedule", "op": "RECALL", "reason": "needed for task s6t2", "session": 6}
 {"corpus": "milldale", "note": "riverside-parking", "op": "RECALL", "reason": "needed for task s6t2", "session": 6}
 {"corpus": "milldale", "note": "bus-schedule", "op": "RECALL", "reason": "needed for task s6t3", "session": 6}
-{"corpus": "milldale", "note": "walk-in-clinic-hours", "op": "CREATE", "reason": "same clinic as the existing note \u2014 a paraphrased title the exact matcher will miss, counted as false-CREATE", "session": 6}
+{"corpus": "milldale", "note": "walk-in-clinic-hours", "op": "CREATE", "reason": "same clinic as the existing note - a paraphrased title the exact matcher will miss, counted as false-CREATE", "session": 6}
 {"corpus": "milldale", "note": "bus-schedule", "op": "PRUNE", "reason": "contradicted by session 6 town notice: route 4 discontinued", "session": 6}
 {"corpus": "milldale", "note": "bus-route-7", "op": "CREATE", "reason": "replacement for pruned bus-schedule", "session": 6}
 {"corpus": "milldale", "note": "school-play", "op": "ARCHIVE", "reason": "decay rule: not created or recalled since session 1 (window 5)", "session": 6}

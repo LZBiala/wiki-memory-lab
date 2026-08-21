@@ -1,8 +1,8 @@
 """The single source of truth for every published number.
 
-report.py reads metrics.jsonl and renders (a) the hero SVG — hand-rolled,
+report.py reads metrics.jsonl and renders (a) the hero SVG - hand-rolled,
 dependency-free, with the harness disclaimer inside the legend so it survives
-screenshots — and (b) the claims block injected into README.md between
+screenshots - and (b) the claims block injected into README.md between
 AUTOGEN markers. No figure in the README is ever typed by hand: CI reruns
 everything and `git diff --exit-code` fails the build if any number drifts.
 """
@@ -12,9 +12,9 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
-AUTOGEN_BEGIN = "<!-- AUTOGEN:BEGIN — rendered by report.py from metrics.jsonl; do not edit by hand -->"
+AUTOGEN_BEGIN = "<!-- AUTOGEN:BEGIN - rendered by report.py from metrics.jsonl; do not edit by hand -->"
 AUTOGEN_END = "<!-- AUTOGEN:END -->"
-DISCLAIMER = "scripted agent — measures the harness, not model capability"
+DISCLAIMER = "scripted agent - measures the harness, not model capability"
 
 _COLORS = {"selective": "#2563eb", "stuff": "#dc2626", "nomemory": "#6b7280"}
 _LABELS = {
@@ -83,7 +83,7 @@ def render_svg(rows: list[Row], corpus: str = "milldale") -> str:
         f'viewBox="0 0 {width} {height}" font-family="monospace" font-size="12">',
         f'<rect width="{width}" height="{height}" fill="#ffffff"/>',
         f'<text x="{ml}" y="20" font-size="14" fill="#111111">'
-        f"context tokens per session — {corpus} corpus (proxy tokens = chars/4)</text>",
+        f"context tokens per session - {corpus} corpus (proxy tokens = chars/4)</text>",
     ]
 
     for i in range(0, y_max + 1, max(100, y_max // 4 // 100 * 100 or 100)):
@@ -144,7 +144,7 @@ def _cumulative(points: list[tuple[int, int]]) -> list[tuple[int, int]]:
 
 
 def render_cumulative_svg(rows: list[Row], corpus: str = "milldale") -> str:
-    """Cumulative context cost, selective vs stuff — the gap IS the savings.
+    """Cumulative context cost, selective vs stuff - the gap IS the savings.
 
     Same honesty rules as the hero chart: proxy tokens, scripted agent, and
     the disclaimer lives inside the legend so screenshots keep it. The final
@@ -180,7 +180,7 @@ def render_cumulative_svg(rows: list[Row], corpus: str = "milldale") -> str:
         f'viewBox="0 0 {width} {height}" font-family="monospace" font-size="12">',
         f'<rect width="{width}" height="{height}" fill="#ffffff"/>',
         f'<text x="{ml}" y="20" font-size="14" fill="#111111">'
-        f"cumulative context tokens — {corpus} corpus (the gap is the freed budget)</text>",
+        f"cumulative context tokens - {corpus} corpus (the gap is the freed budget)</text>",
     ]
 
     for i in range(0, y_max + 1, 500):
@@ -281,7 +281,7 @@ def render_claims(rows: list[Row], wiki_dir: Path, runs_dir: Path) -> str:
     # Byte comparison, measured to match its own row text exactly: the wiki
     # INCLUDING its archive (pruned notes are stored, not deleted, so they are
     # part of the memory footprint) vs ONLY the transcripts of the corpus this
-    # wiki was distilled from — not the mini corpus, not baseline summaries.
+    # wiki was distilled from - not the mini corpus, not baseline summaries.
     wiki_bytes = _glob_bytes(wiki_dir, "*.md") + _glob_bytes(wiki_dir / "archive", "*.md")
     transcript_bytes = _glob_bytes(runs_dir, "milldale-session_*.md")
 
@@ -299,7 +299,7 @@ def render_claims(rows: list[Row], wiki_dir: Path, runs_dir: Path) -> str:
             f"(ratio {ratio:.2f})** | identical fixture suite, three loading policies; "
             "baselines replay the selective run's per-session wiki snapshots; proxy "
             "tokens = chars/4 | the ratio is the claim, not the absolute counts; it "
-            "depends on corpus size and task locality — see the crossover row |"
+            "depends on corpus size and task locality - see the crossover row |"
         ),
         (
             "| Crossover: below a small corpus size, stuffing is cheaper "
@@ -307,7 +307,7 @@ def render_claims(rows: list[Row], wiki_dir: Path, runs_dir: Path) -> str:
             f"{mini_measure_stuff} proxy tokens (ratio {mini_ratio:.2f})** | same "
             f"harness on a corpus of {mini_notes} notes whose tasks touch most of it | "
             "selective recall pays the index every session; on a small, hot corpus "
-            "that overhead is pure loss — the design only wins when the wiki outgrows "
+            "that overhead is pure loss - the design only wins when the wiki outgrows "
             "its working set |"
         ),
         (
@@ -317,7 +317,7 @@ def render_claims(rows: list[Row], wiki_dir: Path, runs_dir: Path) -> str:
             f"{misses} shown miss(es))** | author-written ground-truth labels on the "
             "main corpus only (the crossover mini corpus is measured in its own row); "
             "the runner logs actual recalls | an upper bound by "
-            "construction — the same author wrote tasks, hooks, and labels; the "
+            "construction - the same author wrote tasks, hooks, and labels; the "
             "deliberately lazy hook produces the shown miss |"
         ),
         (
@@ -326,7 +326,7 @@ def render_claims(rows: list[Row], wiki_dir: Path, runs_dir: Path) -> str:
             f"{f_create}, false-EXTEND {f_extend}** | counted from the ops log and "
             "final wiki state of the deterministic run; adversarial fixtures push the "
             "title matcher in both failure directions | proves the harness enforces "
-            "the protocol and characterizes the matcher — not whether a live model "
+            "the protocol and characterizes the matcher - not whether a live model "
             "would follow the protocol unprompted |"
         ),
         (
@@ -335,7 +335,7 @@ def render_claims(rows: list[Row], wiki_dir: Path, runs_dir: Path) -> str:
             f"(~{per_note:.1f}/note, {overhead:.2f} of full-corpus cost at session "
             f"{last.session})** "
             "| measured directly from the generated index and final corpus | one-line "
-            "hooks are a design commitment — hooks that bloat into paragraphs erode "
+            "hooks are a design commitment - hooks that bloat into paragraphs erode "
             "exactly the savings claimed here |"
         ),
         (
@@ -354,7 +354,7 @@ def render_claims(rows: list[Row], wiki_dir: Path, runs_dir: Path) -> str:
     lines.append("")
     lines.append(
         f"Cumulative over the main corpus: selective recall freed **{saved} proxy "
-        f"tokens ({saved_pct:.1f}%)** of context budget vs loading everything — and "
+        f"tokens ({saved_pct:.1f}%)** of context budget vs loading everything - and "
         "the gap widens as the wiki grows "
         "([report/cumulative.svg](report/cumulative.svg)). Same caveats as the first "
         "row: proxy tokens, ratio-not-absolutes, corpus- and locality-dependent."

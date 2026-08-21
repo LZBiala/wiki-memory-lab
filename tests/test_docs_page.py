@@ -3,7 +3,7 @@
 docs/index.html hand-carries transcript excerpts and claim numbers. The page
 is not regenerated, so without these tests it would sit outside the drift
 gate: a fixture change would self-heal the README and silently strand the
-page. These tests parse the page itself (single source — no duplicated
+page. These tests parse the page itself (single source - no duplicated
 strings here) and pin it to the transcripts and metrics.
 """
 from __future__ import annotations

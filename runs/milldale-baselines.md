@@ -1,4 +1,4 @@
-# milldale — baseline replays
+# milldale - baseline replays
 
 session 01: stuff-everything loads 0 notes / 0 tokens; no-memory loads 0 and fails 0 task(s) that needed remembered facts
 session 02: stuff-everything loads 3 notes / 174 tokens; no-memory loads 0 and fails 1 task(s) that needed remembered facts
@@ -9,4 +9,4 @@ session 06: stuff-everything loads 12 notes / 659 tokens; no-memory loads 0 and 
 session 07: stuff-everything loads 12 notes / 659 tokens; no-memory loads 0 and fails 2 task(s) that needed remembered facts
 session 08: stuff-everything loads 14 notes / 775 tokens; no-memory loads 0 and fails 3 task(s) that needed remembered facts
 
-Method: both baselines replay the IDENTICAL per-session wiki snapshots produced by the selective run — same memory state, different loading policy.
+Method: both baselines replay the IDENTICAL per-session wiki snapshots produced by the selective run - same memory state, different loading policy.

@@ -3,7 +3,7 @@
 ScriptedAgent is deterministic on purpose: recall choices come from the
 lexical scorer, answers come from the fixture script, and write-backs are
 rule-driven. Every number in the README is produced by this agent, which is
-exactly why none of those numbers say anything about model capability — they
+exactly why none of those numbers say anything about model capability - they
 characterize the memory protocol and the harness around it.
 
 A live-model adapter deliberately does NOT ship in v1.0. The interface below
@@ -50,7 +50,7 @@ class Agent(ABC):
 
 class ScriptedAgent(Agent):
     name = "ScriptedAgent"
-    banner = "MODE: ScriptedAgent — deterministic, zero API keys; write-backs are rule-driven"
+    banner = "MODE: ScriptedAgent - deterministic, zero API keys; write-backs are rule-driven"
 
     def choose_recall(self, prompt: str, metas: list[NoteMeta]) -> list[str]:
         return recall_names(prompt, metas)

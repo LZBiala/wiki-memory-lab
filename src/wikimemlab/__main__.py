@@ -1,4 +1,4 @@
-"""CLI: `python -m wikimemlab demo` — the whole lab, from clean state, no keys.
+"""CLI: `python -m wikimemlab demo` - the whole lab, from clean state, no keys.
 
 Wipes the generated artifact dirs (wiki/, runs/, report/), replays both fixture
 corpora with the ScriptedAgent, replays the baselines against the identical
@@ -38,7 +38,7 @@ def _clean_tree(path: Path) -> None:
     File-sync tools (and open Explorer windows) hold directory handles on
     Windows and make rmdir fail with access-denied; files always unlink fine.
     Git tracks no empty directories, so a leftover empty folder cannot cause
-    drift — only a stale FILE could, and those are all removed here.
+    drift - only a stale FILE could, and those are all removed here.
     """
     if not path.exists():
         return
@@ -70,7 +70,7 @@ def demo(quiet: bool) -> int:
     if not (FIXTURES / "milldale" / "sessions.json").exists():
         print(
             "wikimemlab demo must run from a source checkout "
-            "(pip install -e . or PYTHONPATH=src) — fixtures not found at "
+            "(pip install -e . or PYTHONPATH=src) - fixtures not found at "
             f"{FIXTURES}",
             file=sys.stderr,
         )
@@ -123,7 +123,7 @@ def demo(quiet: bool) -> int:
 
     emit("")
     emit("Done. Look around:")
-    emit("  wiki/            the agent's memory — plain markdown, open it in any editor")
+    emit("  wiki/            the agent's memory - plain markdown, open it in any editor")
     emit("  runs/            session transcripts; every RECALL/EXTEND/CREATE/PRUNE has a written reason")
     emit("  report/hero.svg  the token curves (disclaimer lives inside the legend)")
     emit("  metrics.jsonl    every number the README publishes, regenerated just now")

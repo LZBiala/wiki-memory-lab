@@ -2,7 +2,7 @@
 
 recall(task_text) works by exact word overlap between the task and each
 index line (note name words count double, hook words count single). No
-stemming, no embeddings, no fuzziness — so "open" does not match "opening"
+stemming, no embeddings, no fuzziness - so "open" does not match "opening"
 and "park" does not match "parking". Those misses are demonstrated in the
 fixtures rather than papered over: a memory system's index is only as good
 as its hooks, and the deliberately-bad-hook note in the corpus shows exactly
