@@ -117,6 +117,22 @@ Cumulative over the main corpus: selective recall freed **1418 proxy tokens (38.
 
 Regenerate everything yourself: `python -m wikimemlab demo --quiet && git diff`.
 
+## The unhobbling reading of the crossover
+
+The 1.27x crossover above is usually read as a limitation of this harness on
+small corpora. Read differently, it names a general pattern: scaffolding is
+overhead a task has to earn back, not a default good. Index-first selective
+recall spends 246 proxy tokens on the index before it recalls a single note
+(see the index row) — a real cost, paid every session, in exchange for
+skipping notes a task doesn't need. On the mini corpus, tasks touch nearly
+everything the index would filter down to anyway, so the index's overhead is
+the only thing left standing in the ratio. Unhobbling here means removing the
+scaffold, not adding one: below the corpus size where the index pays for
+itself, hand the model everything and let it read directly. Above that size
+the scaffold earns its keep, and the gap widens as the wiki grows (see the
+cumulative chart). Same instrument, same numbers — this just names when
+structure helps and when it is dead weight.
+
 ## Why this matters in production — the honest sell
 
 ![cumulative context tokens](report/cumulative.svg)
